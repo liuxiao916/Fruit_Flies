@@ -1,7 +1,7 @@
 #ifndef FLY_STATE_STATE_H
 #define FLY_STATE_STATE_H
 #include<opencv2/opencv.hpp>
-#include <vector>
+#include <queue>
 #include <iostream>
 using namespace cv;
 using namespace std;
@@ -14,16 +14,23 @@ public:
     int mate_time;
     int buff_time1,buff_time2;
     int stop_time1,stop_time2;
+    int average1_x,average1_y,average2_x,average2_y,num;
+    float fps;
     void update_state(vector<Point> p);
+    void Trajectory(vector<Point> p);
+    queue<Point> fly1,fly2;
+    queue<Point> av_center2,av_center1;
+    bool stop_judge(int num);  //判断果蝇是否移动
+    int chasetimes=0;
+    State(float video_fps);
     State();
+    void set_fps(float video_fps);
 
 private:
     Point fly1_now,fly2_now; //果蝇当前坐标
     int fly_move;
-    vector<Point> fly1,fly2;
 
     bool chase_judge();
-    bool stop_judge(vector<Point> fly);  //判断果蝇是否移动
     float dis(Point p1,Point p2);
 };
 
