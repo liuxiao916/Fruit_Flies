@@ -17,6 +17,7 @@ int diffx = 0;
 int diffy = 0;
 int x[15],y[4];
 Mat img;
+
 void trackBar(int, void*)
 {
     diffx = s1 - 15;
@@ -90,6 +91,25 @@ void onMouse(int event, int x, int y, int flags, void *utsc)
         }
     }
 }
+
+void outcsv(State *flies, int size)
+/*
+    This function is used to generate a csv file which contains all infomation
+    Input:
+        flies: The State class
+        size: The size of input flies
+*/
+{
+    std::ofstream myfile;
+    myfile.open ("output.csv");
+    myfile << " ," << "courtship_time,"<<"mate_time ,"<<"indicator"<<endl;
+    for (int i = 0; i< size; i++)
+    {
+        myfile << i<< ","<< flies[i].courtship_time<< ","<<flies[i].mate_time  << "," << flies[i].courtship_time/(flies[i].courtship_time+flies[i].mate_time) <<endl; 
+    }
+    myfile.close();
+}
+
 int main(int argc, char *argv[])
 {
     vector<Point> P[37];
@@ -161,7 +181,7 @@ int main(int argc, char *argv[])
     resizeWindow("output3", 1280, 1080);
     cvNamedWindow("output4", 0);
     resizeWindow("output4", 1280, 1080);
-    while (video_count<all_length){
+    while (video_count<300){
         video >> img;
         warpPerspective(img, dst, M,
                         Size((length), (height)));
@@ -242,6 +262,9 @@ int main(int argc, char *argv[])
         if (key == 'q')
             break;
     }
+
+    outcsv(flies, 37);
+
     ofstream outfile("Test5.txt");  //保存果蝇坐标
     for (int i=0;i<flies[32].fly1.size();i++){
         outfile << flies[32].fly1.front().x <<' '<<flies[32].fly1.front().y<<' '<<flies[32].fly2.front().x<<' '<<flies[32].fly2.front().y<<endl;
