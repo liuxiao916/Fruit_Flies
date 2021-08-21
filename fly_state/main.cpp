@@ -100,23 +100,36 @@ void outcsv(State *flies, int size)
         size: The size of input flies
 */
 {
+    cout<<"output to csv"<<endl;
     std::ofstream myfile;
     myfile.open ("output.csv");
     myfile << " ," << "courtship_time,"<<"mate_time ,"<<"indicator"<<endl;
     for (int i = 0; i< size; i++)
     {
-        myfile << i<< ","<< flies[i].courtship_time<< ","<<flies[i].mate_time  << "," << flies[i].courtship_time/(flies[i].courtship_time+flies[i].mate_time) <<endl; 
+        if ((flies[i].courtship_time/flies[i].fps)||(flies[i].mate_time/flies[i].fps))
+            myfile << i<< ","<< flies[i].courtship_time/flies[i].fps<< ","<<flies[i].mate_time/flies[i].fps  << "," << (float)flies[i].courtship_time/(flies[i].courtship_time+flies[i].mate_time) <<endl;
     }
     myfile.close();
 }
-
+float calc(Point2f rect[4]){
+    float length,width;
+    length = sqrt((rect[0].x-rect[1].x)*(rect[0].x-rect[1].x)+(rect[0].y-rect[1].y)*(rect[0].y-rect[1].y));
+    width = sqrt((rect[2].x-rect[1].x)*(rect[2].x-rect[1].x)+(rect[2].y-rect[1].y)*(rect[2].y-rect[1].y));
+    if (width/length < 1.0)
+        return length/width*1.0;
+    return width/length*1.0;
+}
 int main(int argc, char *argv[])
 {
     vector<Point> P[37];
-    VideoCapture video("test3.mp4");
+    float scale[37];
+    VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+    VideoCapture video("/media/jf/My Passport/gy/Naive_CEMC CS_0527.mp4");
+//    VideoCapture video("test3.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
 //    State test1(fps);
     State flies[37];
+    Mat temp;
     for (int i=0;i<37;i++)
         flies[i].set_fps(fps);
     double all_length = video.get(CV_CAP_PROP_FRAME_COUNT);
@@ -130,6 +143,8 @@ int main(int argc, char *argv[])
     int height = 45*6;
     Mat M;
     bool process1=true,process2=true;
+    for (int i=0;i<90*fps;i++)
+        video>>temp;
     video >> utsc.src;
     namedWindow("src", 0);
     resizeWindow("src", 1280, 1080);
@@ -173,21 +188,26 @@ int main(int argc, char *argv[])
             break;
     }
     Mat img_gray,img_black;
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3), Point(-1, -1));
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(2, 2), Point(-1, -1));
     vector<vector<cv::Point>> contours;
     vector<cv::Vec4i> hierarchy;
+    Point2f rect[4];
     int video_count=0;
     cvNamedWindow("output3", 0);
     resizeWindow("output3", 1280, 1080);
     cvNamedWindow("output4", 0);
     resizeWindow("output4", 1280, 1080);
-    while (video_count<300){
+    while (video_count<(all_length-90*fps)){
         video >> img;
+        if (img.empty())
+            break;
         warpPerspective(img, dst, M,
                         Size((length), (height)));
         video_count++;
-        for (int i=0;i<37;i++)
+        for (int i=0;i<37;i++){
             P[i].clear();
+            scale[i] = 0;
+        }
         cvtColor(dst,img_gray,CV_BGR2GRAY);
         threshold(img_gray,img_black,160,255,CV_THRESH_BINARY);
         dilate(img_black, img_black, kernel);
@@ -206,39 +226,54 @@ int main(int argc, char *argv[])
             int add = 0;
             for (int j=0;j<3;j++)
                 for (int k=0;k<4;k++){
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
+                    int wid = (y[j+1]-y[j])/8;
+//                    wid = 0;
+                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]-wid&&t_y<y[j+1])){
                         int index_num = j*4+k+1;
                         if (t_area>=20)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);
                             P[index_num].emplace_back(boundRect[i].center);
+                            boundRect[i].points(rect);
+                            float ca = calc(rect);
+                            scale[index_num] = ca;
+//                            cout<<"长宽比"<<ca<<endl;
                         }
                     }
                 }
             add = 12;
             for (int j=0;j<3;j++)
                 for (int k=5;k<9;k++){
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
+                    int wid = (y[j+1]-y[j])/8;
+//                    wid = 0;
+                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]-wid&&t_y<y[j+1])){
                         int index_num = j*4+(k-5)+1+add;
                         if (t_area>=20)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);
                             P[index_num].emplace_back(boundRect[i].center);
+                            boundRect[i].points(rect);
+                            float ca = calc(rect);
+                            scale[index_num] = ca;
                         }
                     }
                 }
             add = 24;
             for (int j=0;j<3;j++)
                 for (int k=10;k<14;k++){
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
+                    int wid = (y[j+1]-y[j])/8;
+                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]-wid&&t_y<y[j+1])){
                         int index_num = j*4+(k-10)+1+add;
                         if (t_area>=20)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(img, contours, i, color, 1);
                             P[index_num].emplace_back(boundRect[i].center);
+                            boundRect[i].points(rect);
+                            float ca = calc(rect);
+                            scale[index_num] = ca;
                         }
                     }
                 }
@@ -247,34 +282,47 @@ int main(int argc, char *argv[])
             if (!P[i].empty() && P[i].size()<3){ //有2个果蝇才处理
                 flies[i].Trajectory(P[i]);
                 flies[i].update_state(P[i]);
-                string text = to_string(flies[i].fly_state);
+                flies[i].update_scale(scale[i]);
+                string text =" ";
+                string text1 = to_string(i);
+                if (flies[i].fly_state == 1)
+                    if (flies[i].is_court || flies[i].buff_time1/fps>3)
+                        text = "Court";
+                    else
+                        text = "MayCourt";
+                if (flies[i].fly_state == 2 && scale[i]>1.82)
+                    text = "MayMate";
+                if (flies[i].fly_state == 3 && scale[i]>1.82)
+                    text = "Mate";
                 putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 120, 255), 2);
-                if (flies[i].stop_judge(1))
-                    putText(dst, "stop", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
-                else
-                    putText(dst, "move", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
+//                if (flies[i].stop_judge(1))
+//                    putText(dst, "stop", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
+//                else
+//                    putText(dst, "move", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
             }
         }
 
-        imshow("output3", img_black);
-        imshow("output4", dst);
-        key = waitKey(1);
-        if (key == 'q')
-            break;
+//        imshow("output3", img_black);
+//        imshow("output4", dst);
+        writer<<dst;
+        cout<<"done="<<video_count/(all_length-90*fps)*100<<"%"<<endl;
+//        key = waitKey(1);
+//        if (key == 'q')
+//            break;
     }
 
     outcsv(flies, 37);
 
-    ofstream outfile("Test5.txt");  //保存果蝇坐标
-    for (int i=0;i<flies[32].fly1.size();i++){
-        outfile << flies[32].fly1.front().x <<' '<<flies[32].fly1.front().y<<' '<<flies[32].fly2.front().x<<' '<<flies[32].fly2.front().y<<endl;
-        flies[32].fly1.push(flies[32].fly1.front());
-        flies[32].fly1.pop();
-        flies[32].fly2.push(flies[32].fly2.front());
-        flies[32].fly2.pop();
-    }
-    outfile.close();
-    cout<<"Write done"<<endl;
-    waitKey(0);
+//    ofstream outfile("Test5.txt");  //保存果蝇坐标
+//    for (int i=0;i<flies[32].fly1.size();i++){
+//        outfile << flies[32].fly1.front().x <<' '<<flies[32].fly1.front().y<<' '<<flies[32].fly2.front().x<<' '<<flies[32].fly2.front().y<<endl;
+//        flies[32].fly1.push(flies[32].fly1.front());
+//        flies[32].fly1.pop();
+//        flies[32].fly2.push(flies[32].fly2.front());
+//        flies[32].fly2.pop();
+//    }
+//    outfile.close();
+//    cout<<"Write done"<<endl;
+//    waitKey(0);
     return 0;
 }

@@ -17,12 +17,16 @@ public:
     int average1_x,average1_y,average2_x,average2_y,num;
     float fps;
     void update_state(vector<Point> p);
+    void update_scale(float scale);
     void Trajectory(vector<Point> p);
     queue<Point> fly1,fly2;
     queue<Point> av_center2,av_center1;
     bool stop_judge(int num);  //判断果蝇是否移动
     int chasetimes=0;
-    State(float video_fps);
+    int is_court;
+    int size2_time;
+    int size1_time;
+    float sca;
     State();
     void set_fps(float video_fps);
 
