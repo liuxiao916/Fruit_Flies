@@ -12,7 +12,7 @@ public:
     int fly_state;
     int courtship_time;
     int mate_time;
-    int buff_time1,buff_time2;
+    int buff_time1,buff_time2,buff_time3;
     int stop_time1,stop_time2;
     int average1_x,average1_y,average2_x,average2_y,num;
     float fps;
@@ -22,6 +22,7 @@ public:
     queue<Point> fly1,fly2;
     queue<Point> av_center2,av_center1;
     bool stop_judge(int num);  //判断果蝇是否移动
+    bool matestop_judge(int num);
     int chasetimes=0;
     int is_court;
     int size2_time;

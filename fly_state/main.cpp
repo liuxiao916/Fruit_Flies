@@ -119,12 +119,19 @@ float calc(Point2f rect[4]){
         return length/width*1.0;
     return width/length*1.0;
 }
+bool dis_judge(Point p1,Point p2){
+    float dis;
+    dis = sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
+    if (dis>12.0)
+        cout<<"dis="<<dis<<endl;
+    return dis <= 12.0;
+}
 int main(int argc, char *argv[])
 {
     vector<Point> P[37];
     float scale[37];
     VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-    VideoCapture video("/media/jf/My Passport/gy/Naive_CEMC CS_0527.mp4");
+    VideoCapture video("/home/jf/SMD_Naive_NachBac_0521.mp4");
 //    VideoCapture video("test3.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
 //    State test1(fps);
@@ -141,11 +148,22 @@ int main(int argc, char *argv[])
     char key;
     int length = 155*6;
     int height = 45*6;
-    Mat M;
+    Mat M,tempsrc;
     bool process1=true,process2=true;
-    for (int i=0;i<90*fps;i++)
-        video>>temp;
-    video >> utsc.src;
+//    for (int i=0;i<60*fps;i++)
+//        video>>temp;
+    Mat mid;
+//    video >> utsc.src;
+    video >> mid;
+//    Size dsize=Size(1280,int(mid.rows*1280/mid.cols));
+    Size dsize;
+    if (mid.rows>mid.cols)
+        dsize=Size(int(mid.cols*1280/mid.rows),1280);
+    else
+        dsize=Size(1280,int(mid.rows*1280/mid.cols));
+    resize(mid, utsc.src, dsize);
+    cout<<utsc.src.size<<endl;
+    tempsrc = utsc.src.clone();
     namedWindow("src", 0);
     resizeWindow("src", 1280, 1080);
     int flag = 2;
@@ -180,6 +198,17 @@ int main(int argc, char *argv[])
     cvNamedWindow("output2", 0);
     resizeWindow("output2", 1280, 1080);
     first();
+    Mat srcimg,dstimg;
+    vector<Mat> matchimg;
+    vector<Point> matchcenter;
+    Point leftup,rightdown,center;
+    for (int i=0;i<4;i++){
+        center = utsc.srcTri[i];
+        if (center.x>3 && center.y>3){
+            matchimg.emplace_back(tempsrc(Rect(center.x-3,center.y-3,6,6)).clone());
+            matchcenter.emplace_back(center);
+        }
+    }
     while (process2){
         createTrackbar("diffx", "output2", &s1, 30, trackBar);
         createTrackbar("diffy", "output2", &s2, 30, trackBar);
@@ -188,22 +217,62 @@ int main(int argc, char *argv[])
             break;
     }
     Mat img_gray,img_black;
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(2, 2), Point(-1, -1));
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3), Point(-1, -1));
     vector<vector<cv::Point>> contours;
     vector<cv::Vec4i> hierarchy;
     Point2f rect[4];
-    int video_count=0;
+    int video_count=0,wid,heigh;
     cvNamedWindow("output3", 0);
     resizeWindow("output3", 1280, 1080);
     cvNamedWindow("output4", 0);
     resizeWindow("output4", 1280, 1080);
-    while (video_count<(all_length-90*fps)){
-        video >> img;
-        if (img.empty())
+    while (video_count<(all_length)){
+        video >> mid;
+        if (mid.empty())
             break;
+        resize(mid, img, dsize);
+        video_count++;
+        if (video_count%5 !=0)
+            continue;
+        for (int i=0;i<4;i++){
+            center = matchcenter[i];
+            if (center.x>20)
+                leftup.x=center.x-20;
+            else
+                leftup.x = 0;
+            if (center.y>20)
+                leftup.y=center.y-20;
+            else
+                leftup.y = 0;
+            if (center.x+20>img.cols)
+                rightdown.x = img.cols;
+            else
+                rightdown.x = center.x+20;
+            if (center.y+20>img.rows)
+                rightdown.y = img.rows;
+            else
+                rightdown.y = center.y+20;
+            wid = rightdown.x-leftup.x;
+            heigh = rightdown.y - leftup.y;
+            srcimg = img(Rect(leftup.x,leftup.y,wid,heigh)).clone();
+            matchTemplate(srcimg, matchimg[i], dstimg, TM_SQDIFF);
+            normalize(dstimg,dstimg,0, 1, NORM_MINMAX, -1, Mat());
+            double minvalue,maxvalue;
+            Point minLocat,maxLocat;
+            Point matchLocate,location;
+            minMaxLoc(dstimg, &minvalue, &maxvalue, &minLocat, &maxLocat, Mat());
+            matchLocate = minLocat;
+            location.x = matchLocate.x+leftup.x+(int)matchimg[i].cols/2;
+            location.y = matchLocate.y+leftup.y+(int)matchimg[i].rows/2;
+            if (dis_judge(location, matchcenter[i]))
+                matchcenter[i]=location;
+//            rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
+//            circle(img,center,2,Scalar(255,0,0),2);
+//            rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);
+        }
+        M = findHomography(matchcenter, dstTri, RANSAC);
         warpPerspective(img, dst, M,
                         Size((length), (height)));
-        video_count++;
         for (int i=0;i<37;i++){
             P[i].clear();
             scale[i] = 0;
@@ -226,11 +295,9 @@ int main(int argc, char *argv[])
             int add = 0;
             for (int j=0;j<3;j++)
                 for (int k=0;k<4;k++){
-                    int wid = (y[j+1]-y[j])/8;
-//                    wid = 0;
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]-wid&&t_y<y[j+1])){
+                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                         int index_num = j*4+k+1;
-                        if (t_area>=20)
+                        if (t_area>=13)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);
@@ -245,11 +312,9 @@ int main(int argc, char *argv[])
             add = 12;
             for (int j=0;j<3;j++)
                 for (int k=5;k<9;k++){
-                    int wid = (y[j+1]-y[j])/8;
-//                    wid = 0;
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]-wid&&t_y<y[j+1])){
+                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                         int index_num = j*4+(k-5)+1+add;
-                        if (t_area>=20)
+                        if (t_area>=13)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);
@@ -263,13 +328,12 @@ int main(int argc, char *argv[])
             add = 24;
             for (int j=0;j<3;j++)
                 for (int k=10;k<14;k++){
-                    int wid = (y[j+1]-y[j])/8;
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]-wid&&t_y<y[j+1])){
+                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                         int index_num = j*4+(k-10)+1+add;
-                        if (t_area>=20)
+                        if (t_area>=13)
                         {
                             Scalar color = Scalar(0, 0, 255);
-                            drawContours(img, contours, i, color, 1);
+                            drawContours(dst, contours, i, color, 1);
                             P[index_num].emplace_back(boundRect[i].center);
                             boundRect[i].points(rect);
                             float ca = calc(rect);
@@ -290,11 +354,15 @@ int main(int argc, char *argv[])
                         text = "Court";
                     else
                         text = "MayCourt";
-                if (flies[i].fly_state == 2 && scale[i]>1.82)
-                    text = "MayMate";
-                if (flies[i].fly_state == 3 && scale[i]>1.82)
-                    text = "Mate";
+                if (flies[i].fly_state == 2)
+                    text = "3";
+                if (flies[i].fly_state == 3)
+                    text = "4";
                 putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 120, 255), 2);
+                if (i==32){
+                    text=to_string(scale[i]);
+                    putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 0), 2);
+                }
 //                if (flies[i].stop_judge(1))
 //                    putText(dst, "stop", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
 //                else
@@ -302,10 +370,10 @@ int main(int argc, char *argv[])
             }
         }
 
-//        imshow("output3", img_black);
+//        imshow("output3", img);
 //        imshow("output4", dst);
         writer<<dst;
-        cout<<"done="<<video_count/(all_length-90*fps)*100<<"%"<<endl;
+        cout<<"done="<<video_count/(all_length)*100<<"%"<<endl;
 //        key = waitKey(1);
 //        if (key == 'q')
 //            break;
