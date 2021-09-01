@@ -198,14 +198,16 @@ void MainWindow::on_pushButton_out_clicked()
 {
     if(m_isOpenFile){
         outcsv(flies, 37);
+        ui->statusbar->showMessage(tr("输出完成"));
     }
 }
 
 void MainWindow::ProcessVideo()
 {
-    if (video_count>=(all_length-1))
+    if (video_count>=(all_length-2))
     {
         timer->stop();
+        ui->progressBar->setValue(all_length);
     }
         ui->progressBar->setValue(video_count);
         video >> mid;
