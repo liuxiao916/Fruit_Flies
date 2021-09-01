@@ -189,6 +189,10 @@ void MainWindow::on_pushButton_start_clicked()
 {
     if(m_isOpenFile)
     {
+        ui->statusbar->showMessage(tr("指定视频存储路径"));
+        QString fileName;
+        fileName = QFileDialog::getSaveFileName(this,tr("Open Video"), "output.avi", tr("csv Files (*.avi)"));
+        writer.open(fileName.toStdString(),CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
         timer->start(25);
     }
 }
@@ -197,8 +201,12 @@ void MainWindow::on_pushButton_start_clicked()
 void MainWindow::on_pushButton_out_clicked()
 {
     if(m_isOpenFile){
-        outcsv(flies, 37);
+        ui->statusbar->showMessage(tr("指定表格存储路径"));
+        QString fileName;
+        fileName = QFileDialog::getSaveFileName(this,tr("Open Csv"), "output.csv", tr("csv Files (*.csv)"));
+        outcsv(flies, fileName.toStdString(),37);
         ui->statusbar->showMessage(tr("输出完成"));
+        ui->progressBar->setValue(all_length);
     }
 }
 

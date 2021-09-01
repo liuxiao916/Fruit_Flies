@@ -16,7 +16,7 @@ struct callbackP
 };
 
 void onMouse(int event, int x, int y, int flags, void *utsc);
-void outcsv(State *flies, int size);
+void outcsv(State *flies,string filepath, int size);
 bool dis_judge(Point p1,Point p2);
 float calc(Point2f rect[4]);
 QImage	Mat2QImage(cv::Mat mtx);

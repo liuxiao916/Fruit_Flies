@@ -26,7 +26,7 @@ void onMouse(int event, int x, int y, int flags, void *utsc)
 }
 
 
-void outcsv(State *flies, int size)
+void outcsv(State *flies,string filepath, int size)
 /*
     This function is used to generate a csv file which contains all infomation
     Input:
@@ -36,7 +36,7 @@ void outcsv(State *flies, int size)
 {
     //cout<<"output to csv"<<endl;
     std::ofstream myfile;
-    myfile.open ("output.csv");
+    myfile.open (filepath);
     myfile << " ," << "courtship_time,"<<"mate_time ,"<<"indicator"<<endl;
     for (int i = 0; i< size; i++)
     {
