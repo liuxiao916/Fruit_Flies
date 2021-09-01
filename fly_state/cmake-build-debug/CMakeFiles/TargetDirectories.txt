@@ -1,3 +1,0 @@
-/home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/fly_state.dir
-/home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -192,7 +192,7 @@ void State::update_state(vector<Point> p) {
             if (buff_time2/fps > 300){  //300秒未分开，说明进入了交配阶段
                 mate_time = mate_time + buff_time2 + buff_time3;
                 fly_state = 3;
-                fly_move = 0; 
+                fly_move = 0;
             }
             break;
         }
