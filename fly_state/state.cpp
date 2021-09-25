@@ -103,11 +103,11 @@ void State::update_state(vector<Point> p) {
                 stop_time2 = 0;
             }
             if (p.size() == 2){
-                size2_time += 5;
+                size2_time += 1;
                 size1_time = 0;
             }
             if (p.size() == 1 && size2_time/fps > 4){
-                size1_time += 5;
+                size1_time += 1;
             }
             if (size1_time/fps > 3){
                 fly_state = 2;
@@ -122,12 +122,12 @@ void State::update_state(vector<Point> p) {
             if (p.size()==2){
                 bool flag1 = true, flag2 = true;
                 if (State::stop_judge(1)) {  //1号是否静止
-                    stop_time1+=5;
+                    stop_time1+=1;
                     flag1 = false;
                 } else  //静止时间清零
                     stop_time1 = 0;
                 if (State::stop_judge(2)) { //2号是否静止
-                    stop_time2+=5;
+                    stop_time2+=1;
                     flag2 = false;
                 } else stop_time2 = 0;
                 if ((flag1 || flag2) && stop_time1 / fps < 5 && stop_time2 / fps < 5) { //至少有一个不静止且另外一个静止时间不超过5秒，就认为有可能还在求偶
@@ -137,7 +137,7 @@ void State::update_state(vector<Point> p) {
                         is_court = 1;
                     }
                     else{
-                        buff_time1 +=5;
+                        buff_time1 +=1;
                         is_court = 0;
                     }
                     if (buff_time1/fps > 3)  //连续3s没有通过追逐检测才清空缓冲时间，增加鲁棒性
@@ -171,13 +171,13 @@ void State::update_state(vector<Point> p) {
         }
         case 2: {//交配缓冲阶段
 //            if (State::matestop_judge(1)&& sca>1.5){
-            if (p.size() == 1 && sca>1.7){
-                buff_time2 +=5;
+            if (p.size() == 1 && sca>1.5){
+                buff_time2 +=1;
                 fly_move = 0;
             }
             else{
-                fly_move +=5;
-                buff_time3 +=5;
+                fly_move +=1;
+                buff_time3 +=1;
             }
             if (p.size()==2)
                 size2_time++;
@@ -198,11 +198,11 @@ void State::update_state(vector<Point> p) {
         }
         case 3: {//交配阶段
             if (p.size() == 1){
-                mate_time+=5;
+                mate_time+=1;
                 fly_move = 0;
             }
             else
-                fly_move+=5;
+                fly_move+=1;
             if (fly_move/fps > 5) //分开累计10秒认为交配已经结束
                 fly_state = 4;
             break;
@@ -217,9 +217,9 @@ bool State::chase_judge() {
     if (!stop_judge(1)&&!stop_judge(2)){
         distance = dis(fly1.back(), fly2.back());
         if (distance<24)
-            chasetimes+=5;
+            chasetimes+=1;
         else
-            chasetimes -=5;
+            chasetimes -=1;
         if (chasetimes<0)
             chasetimes = 0;
         if (chasetimes > fps*3){

@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
     vector<Point> P[37];
     float scale[37];
     VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-    VideoCapture video("/home/jf/SMD_Naive_NachBac_0521.mp4");
+    VideoCapture video("/media/jf/TOSHIBA EXT/fly video/SMD_Naive_NachBac_0521.mp4");
 //    VideoCapture video("test3.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
 //    State test1(fps);
@@ -232,8 +232,8 @@ int main(int argc, char *argv[])
             break;
         resize(mid, img, dsize);
         video_count++;
-        if (video_count%5 !=0)
-            continue;
+//        if (video_count%5 !=0)
+//            continue;
         for (int i=0;i<4;i++){
             center = matchcenter[i];
             if (center.x>20)
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
             if (dis_judge(location, matchcenter[i]))
                 matchcenter[i]=location;
 //            rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
-//            circle(img,center,2,Scalar(255,0,0),2);
+//            circle(img,center,2,Scalar(255,        0,0),2);
 //            rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);
         }
         M = findHomography(matchcenter, dstTri, RANSAC);
@@ -278,7 +278,8 @@ int main(int argc, char *argv[])
             scale[i] = 0;
         }
         cvtColor(dst,img_gray,CV_BGR2GRAY);
-        threshold(img_gray,img_black,160,255,CV_THRESH_BINARY);
+        medianBlur(img_gray,img_gray,3);
+        threshold(img_gray,img_black,150,255,CV_THRESH_BINARY);
         dilate(img_black, img_black, kernel);
         findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
         vector<RotatedRect> boundRect(contours.size());
@@ -297,7 +298,7 @@ int main(int argc, char *argv[])
                 for (int k=0;k<4;k++){
                     if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                         int index_num = j*4+k+1;
-                        if (t_area>=13)
+                        if (t_area>=14)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);
@@ -314,7 +315,7 @@ int main(int argc, char *argv[])
                 for (int k=5;k<9;k++){
                     if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                         int index_num = j*4+(k-5)+1+add;
-                        if (t_area>=13)
+                        if (t_area>=14)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);
@@ -330,7 +331,7 @@ int main(int argc, char *argv[])
                 for (int k=10;k<14;k++){
                     if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                         int index_num = j*4+(k-10)+1+add;
-                        if (t_area>=13)
+                        if (t_area>=14)
                         {
                             Scalar color = Scalar(0, 0, 255);
                             drawContours(dst, contours, i, color, 1);

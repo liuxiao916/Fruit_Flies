@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/key.dir/main.cpp.o  -o key 
