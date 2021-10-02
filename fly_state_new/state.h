@@ -27,6 +27,7 @@ public:
     int is_court;
     int size2_time;
     int size1_time;
+    int speed;
     float sca;
     State();
     void set_fps(float video_fps);

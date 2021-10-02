@@ -12,10 +12,12 @@ int main() {
     double all_length = video.get(CV_CAP_PROP_FRAME_COUNT);
     int index,i,board_num;
     int write = 0;
+    int speed = 2;
     for (index=0;index<4;index++){  //初始化帧率
         for (i=0;i<37;i++)
             bo[index].flies[i].set_fps(fps);
         bo[index].fps = fps;
+        bo[index].set_speed(speed);
     }
     Mat dst,src,gray;
     bool resize_flag=false;
@@ -58,7 +60,7 @@ int main() {
         else
             src = mid.clone();
         video_count++;
-        if (video_count%2!=0)
+        if (video_count%speed!=0)
             continue;
         for (index = 0;index<board_num;index++){
             bo[index].state(src);  //状态更新

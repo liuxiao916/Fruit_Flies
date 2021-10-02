@@ -83,6 +83,10 @@ void onMouse(int event, int x, int y, int flags, void *utsc)
         }
     }
 }
+void board::set_speed(int speed) {
+    for (int i=0;i<37;i++)
+        flies[i].speed = speed;
+}
 void board::get_point(Mat &img) {
     bool process1 = true;
     utsc.src = img.clone();

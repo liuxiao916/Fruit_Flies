@@ -30,6 +30,7 @@ public:
     void reset_matcher();
     void state(Mat &img);
     void csv_output(int pos);
+    void set_speed(int speed);
     float fps;
     Mat dst,M;
 private:
