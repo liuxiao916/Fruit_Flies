@@ -44,21 +44,21 @@ RM = /home/jf/CLion-2019.2.5/clion-2019.2.5/bin/cmake/linux/bin/cmake -E remove 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jf/Fruit/Fruit_Flies/fly_state
+CMAKE_SOURCE_DIR = /home/jf/Opencv_Project/fly_state_new
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug
+CMAKE_BINARY_DIR = /home/jf/Opencv_Project/fly_state_new/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/fly_state.dir/all
+all: CMakeFiles/fly_state_new.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/fly_state.dir/clean
+clean: CMakeFiles/fly_state_new.dir/clean
 
 .PHONY : clean
 
@@ -68,31 +68,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/fly_state.dir
+# Target rules for target CMakeFiles/fly_state_new.dir
 
 # All Build rule for target.
-CMakeFiles/fly_state.dir/all:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/depend
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target fly_state"
-.PHONY : CMakeFiles/fly_state.dir/all
+CMakeFiles/fly_state_new.dir/all:
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/depend
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4 "Built target fly_state_new"
+.PHONY : CMakeFiles/fly_state_new.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/fly_state.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/fly_state.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/fly_state.dir/rule
+CMakeFiles/fly_state_new.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/fly_state_new.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/fly_state_new.dir/rule
 
 # Convenience name for target.
-fly_state: CMakeFiles/fly_state.dir/rule
+fly_state_new: CMakeFiles/fly_state_new.dir/rule
 
-.PHONY : fly_state
+.PHONY : fly_state_new
 
 # clean rule for target.
-CMakeFiles/fly_state.dir/clean:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/clean
-.PHONY : CMakeFiles/fly_state.dir/clean
+CMakeFiles/fly_state_new.dir/clean:
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/clean
+.PHONY : CMakeFiles/fly_state_new.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

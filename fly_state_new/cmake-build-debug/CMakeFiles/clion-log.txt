@@ -1,4 +1,4 @@
-/home/jf/CLion-2019.2.5/clion-2019.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/jf/Fruit/Fruit_Flies/fly_state
+/home/jf/CLion-2019.2.5/clion-2019.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/jf/Opencv_Project/fly_state_new
 -- The C compiler identification is GNU 7.5.0
 -- The CXX compiler identification is GNU 7.5.0
 -- Check for working C compiler: /usr/bin/cc
@@ -16,4 +16,4 @@
 -- Found OpenCV: /usr/local (found version "3.4.13") 
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug
+-- Build files have been written to: /home/jf/Opencv_Project/fly_state_new/cmake-build-debug

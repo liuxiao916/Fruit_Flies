@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jf/Opencv_Project/fly_state_new/board.h
+opencv2/opencv.hpp
+-
+state.h
+/home/jf/Opencv_Project/fly_state_new/state.h
+fstream
+-
+
+/home/jf/Opencv_Project/fly_state_new/main.cpp
+opencv2/opencv.hpp
+-
+state.h
+/home/jf/Opencv_Project/fly_state_new/state.h
+fstream
+-
+board.h
+/home/jf/Opencv_Project/fly_state_new/board.h
+
+/home/jf/Opencv_Project/fly_state_new/state.h
+opencv2/opencv.hpp
+-
+queue
+-
+iostream
+-
+

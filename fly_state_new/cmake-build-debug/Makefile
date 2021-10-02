@@ -48,10 +48,10 @@ RM = /home/jf/CLion-2019.2.5/clion-2019.2.5/bin/cmake/linux/bin/cmake -E remove 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jf/Fruit/Fruit_Flies/fly_state
+CMAKE_SOURCE_DIR = /home/jf/Opencv_Project/fly_state_new
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug
+CMAKE_BINARY_DIR = /home/jf/Opencv_Project/fly_state_new/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles /home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named fly_state
+# Target rules for targets named fly_state_new
 
 # Build rule for target.
-fly_state: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 fly_state
-.PHONY : fly_state
+fly_state_new: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fly_state_new
+.PHONY : fly_state_new
 
 # fast build rule for target.
-fly_state/fast:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/build
-.PHONY : fly_state/fast
+fly_state_new/fast:
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/build
+.PHONY : fly_state_new/fast
+
+board.o: board.cpp.o
+
+.PHONY : board.o
+
+# target to build an object file
+board.cpp.o:
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/board.cpp.o
+.PHONY : board.cpp.o
+
+board.i: board.cpp.i
+
+.PHONY : board.i
+
+# target to preprocess a source file
+board.cpp.i:
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/board.cpp.i
+.PHONY : board.cpp.i
+
+board.s: board.cpp.s
+
+.PHONY : board.s
+
+# target to generate assembly for a file
+board.cpp.s:
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/board.cpp.s
+.PHONY : board.cpp.s
 
 main.o: main.cpp.o
 
@@ -129,7 +156,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -138,7 +165,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -147,7 +174,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 state.o: state.cpp.o
@@ -156,7 +183,7 @@ state.o: state.cpp.o
 
 # target to build an object file
 state.cpp.o:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/state.cpp.o
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/state.cpp.o
 .PHONY : state.cpp.o
 
 state.i: state.cpp.i
@@ -165,7 +192,7 @@ state.i: state.cpp.i
 
 # target to preprocess a source file
 state.cpp.i:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/state.cpp.i
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/state.cpp.i
 .PHONY : state.cpp.i
 
 state.s: state.cpp.s
@@ -174,7 +201,7 @@ state.s: state.cpp.s
 
 # target to generate assembly for a file
 state.cpp.s:
-	$(MAKE) -f CMakeFiles/fly_state.dir/build.make CMakeFiles/fly_state.dir/state.cpp.s
+	$(MAKE) -f CMakeFiles/fly_state_new.dir/build.make CMakeFiles/fly_state_new.dir/state.cpp.s
 .PHONY : state.cpp.s
 
 # Help Target
@@ -184,8 +211,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... fly_state"
+	@echo "... fly_state_new"
 	@echo "... edit_cache"
+	@echo "... board.o"
+	@echo "... board.i"
+	@echo "... board.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

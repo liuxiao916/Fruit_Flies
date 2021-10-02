@@ -4,8 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/jf/Fruit/Fruit_Flies/fly_state/main.cpp" "/home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/fly_state.dir/main.cpp.o"
-  "/home/jf/Fruit/Fruit_Flies/fly_state/state.cpp" "/home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/fly_state.dir/state.cpp.o"
+  "/home/jf/Opencv_Project/fly_state_new/board.cpp" "/home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles/fly_state_new.dir/board.cpp.o"
+  "/home/jf/Opencv_Project/fly_state_new/main.cpp" "/home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles/fly_state_new.dir/main.cpp.o"
+  "/home/jf/Opencv_Project/fly_state_new/state.cpp" "/home/jf/Opencv_Project/fly_state_new/cmake-build-debug/CMakeFiles/fly_state_new.dir/state.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

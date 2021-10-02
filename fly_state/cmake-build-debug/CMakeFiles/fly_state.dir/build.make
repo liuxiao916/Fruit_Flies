@@ -43,10 +43,10 @@ RM = /home/jf/CLion-2019.2.5/clion-2019.2.5/bin/cmake/linux/bin/cmake -E remove 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jf/Fruit_Flies/fly_state
+CMAKE_SOURCE_DIR = /home/jf/Fruit/Fruit_Flies/fly_state
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jf/Fruit_Flies/fly_state/cmake-build-debug
+CMAKE_BINARY_DIR = /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/fly_state.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/fly_state.dir/flags.make
 
 CMakeFiles/fly_state.dir/main.cpp.o: CMakeFiles/fly_state.dir/flags.make
 CMakeFiles/fly_state.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/fly_state.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/fly_state.dir/main.cpp.o -c /home/jf/Fruit_Flies/fly_state/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/fly_state.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/fly_state.dir/main.cpp.o -c /home/jf/Fruit/Fruit_Flies/fly_state/main.cpp
 
 CMakeFiles/fly_state.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/fly_state.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jf/Fruit_Flies/fly_state/main.cpp > CMakeFiles/fly_state.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jf/Fruit/Fruit_Flies/fly_state/main.cpp > CMakeFiles/fly_state.dir/main.cpp.i
 
 CMakeFiles/fly_state.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fly_state.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jf/Fruit_Flies/fly_state/main.cpp -o CMakeFiles/fly_state.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jf/Fruit/Fruit_Flies/fly_state/main.cpp -o CMakeFiles/fly_state.dir/main.cpp.s
 
 CMakeFiles/fly_state.dir/state.cpp.o: CMakeFiles/fly_state.dir/flags.make
 CMakeFiles/fly_state.dir/state.cpp.o: ../state.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/fly_state.dir/state.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/fly_state.dir/state.cpp.o -c /home/jf/Fruit_Flies/fly_state/state.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/fly_state.dir/state.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/fly_state.dir/state.cpp.o -c /home/jf/Fruit/Fruit_Flies/fly_state/state.cpp
 
 CMakeFiles/fly_state.dir/state.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/fly_state.dir/state.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jf/Fruit_Flies/fly_state/state.cpp > CMakeFiles/fly_state.dir/state.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jf/Fruit/Fruit_Flies/fly_state/state.cpp > CMakeFiles/fly_state.dir/state.cpp.i
 
 CMakeFiles/fly_state.dir/state.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fly_state.dir/state.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jf/Fruit_Flies/fly_state/state.cpp -o CMakeFiles/fly_state.dir/state.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jf/Fruit/Fruit_Flies/fly_state/state.cpp -o CMakeFiles/fly_state.dir/state.cpp.s
 
 # Object files for target fly_state
 fly_state_OBJECTS = \
@@ -112,7 +112,7 @@ fly_state: /usr/local/lib/libopencv_imgcodecs.so.3.4.13
 fly_state: /usr/local/lib/libopencv_imgproc.so.3.4.13
 fly_state: /usr/local/lib/libopencv_core.so.3.4.13
 fly_state: CMakeFiles/fly_state.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable fly_state"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable fly_state"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fly_state.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -125,6 +125,6 @@ CMakeFiles/fly_state.dir/clean:
 .PHONY : CMakeFiles/fly_state.dir/clean
 
 CMakeFiles/fly_state.dir/depend:
-	cd /home/jf/Fruit_Flies/fly_state/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jf/Fruit_Flies/fly_state /home/jf/Fruit_Flies/fly_state /home/jf/Fruit_Flies/fly_state/cmake-build-debug /home/jf/Fruit_Flies/fly_state/cmake-build-debug /home/jf/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/fly_state.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jf/Fruit/Fruit_Flies/fly_state /home/jf/Fruit/Fruit_Flies/fly_state /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug /home/jf/Fruit/Fruit_Flies/fly_state/cmake-build-debug/CMakeFiles/fly_state.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/fly_state.dir/depend
 
