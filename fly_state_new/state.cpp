@@ -19,6 +19,11 @@ State::State() {
     average2_x = 0;
     average2_y = 0;
     size1_time =0;
+    first_court = true;
+    court_start=0;
+    mate_start=0;
+    mate_end=0;
+    may_mate = 0;
     num = 0;
     chasetimes = 0;
     clear_queue(av_center1);
@@ -93,14 +98,16 @@ void State::Trajectory(vector<Point> p){
         av_center2.pop();
     return ;
 }
-void State::update_state(vector<Point> p) {
+void State::update_state(vector<Point> p,int index) {
     switch (fly_state){  //状态机
         case 0: {  //求偶前
-            if (State::chase_judge() && p.size() == 2) {
+            if (State::chase_judge() && p.size() == 2&&first_court) {
                 is_court = 1;
                 fly_state = 1;
                 stop_time1 = 0;
                 stop_time2 = 0;
+                court_start = index;
+                first_court = false;
             }
             if (p.size() == 2){
                 size2_time += speed;
@@ -111,6 +118,7 @@ void State::update_state(vector<Point> p) {
             }
             if (size1_time/fps > 3){
                 fly_state = 2;
+                may_mate = index;
                 buff_time2 = 0;
                 buff_time3 = 0;
                 fly_move = 0;
@@ -162,6 +170,7 @@ void State::update_state(vector<Point> p) {
                 }
                 if (flag1 || flag2){  //至少有一个通过静止判定认为静止，进入交配缓冲阶段
                     fly_state = 2;
+                    may_mate = index;
                     buff_time2 = 0; //交配时间不累计
                     buff_time3 = 0;
                     fly_move = 0;size2_time=0;
@@ -190,6 +199,7 @@ void State::update_state(vector<Point> p) {
                 stop_time2 = 0;
             }
             if (buff_time2/fps > 300){  //300秒未分开，说明进入了交配阶段
+                mate_start = may_mate;
                 mate_time = mate_time + buff_time2 + buff_time3;
                 fly_state = 3;
                 fly_move = 0; 
@@ -204,7 +214,10 @@ void State::update_state(vector<Point> p) {
             else
                 fly_move+=speed;
             if (fly_move/fps > 5) //分开累计10秒认为交配已经结束
+            {
                 fly_state = 4;
+                mate_end = index;
+            }
             break;
         }
         case 4: //交配结束
@@ -250,11 +263,11 @@ bool State::matestop_judge(int num) {
         return false;
     if (num==1){
         distance = dis(fly1.back(), av_center1.back());
-        return distance <= 6;
+        return distance <= 8;
     }
     else {
         distance = dis(fly2.back(), av_center2.back());
-        return distance <= 6;
+        return distance <= 8;
     }
 }
 float State::dis(Point p1, Point p2) {

@@ -15,8 +15,11 @@ public:
     int buff_time1,buff_time2,buff_time3;
     int stop_time1,stop_time2;
     int average1_x,average1_y,average2_x,average2_y,num;
+    int court_start,mate_start,mate_end;
+    bool first_court;
+    int may_mate;
     float fps;
-    void update_state(vector<Point> p);
+    void update_state(vector<Point> p,int index);
     void update_scale(float scale);
     void Trajectory(vector<Point> p);
     queue<Point> fly1,fly2;

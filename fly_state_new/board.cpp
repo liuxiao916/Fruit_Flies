@@ -152,7 +152,7 @@ bool dis_judge(Point p1,Point p2){
 //        cout<<"dis="<<dis<<endl;
     return dis <= 8.0;
 }
-void board::state(Mat &img) {
+void board::state(Mat &img, int time) {
     int wid,heigh;
     Mat img_gray,img_black;
     Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3), Point(-1, -1));
@@ -273,7 +273,7 @@ void board::state(Mat &img) {
     for (int i=0;i<37;i++){
         if (!P[i].empty() && P[i].size()<3){ //有2个果蝇才处理
             flies[i].Trajectory(P[i]);
-            flies[i].update_state(P[i]);
+            flies[i].update_state(P[i],time);
             flies[i].update_scale(scale[i]);
             string text =" ";
             string text1 = to_string(i);
@@ -301,13 +301,18 @@ void board::state(Mat &img) {
 void board::csv_output(int pos) {
     cout<<"output to csv"<<endl;
     string file = "output_"+to_string(pos+1)+".csv";
+    float CI;
     std::ofstream myfile;
     myfile.open (file);
-    myfile << " ," << "courtship_time,"<<"mate_time ,"<<"indicator"<<endl;
+    myfile << " ," << "courtship_time(min),"<<"mate_time(min),"<<"CI,"<<"court start time(min),"<<"mate start time(min),"<<"mate end time(min)"<<endl;
     for (int i = 0; i< 37; i++)
     {
+        if (flies[i].mate_start == 0)
+            CI = 0;
+        else
+            CI = (float)flies[i].courtship_time/(flies[i].mate_start);
         if ((flies[i].courtship_time/flies[i].fps)||(flies[i].mate_time/flies[i].fps))
-            myfile << i<< ","<< flies[i].courtship_time/flies[i].fps<< ","<<flies[i].mate_time/flies[i].fps  << "," << (float)flies[i].courtship_time/(flies[i].courtship_time+flies[i].mate_time) <<endl;
+            myfile << i<< ","<< flies[i].courtship_time/flies[i].fps/60<< ","<<flies[i].mate_time/flies[i].fps/60 << "," << CI <<","<<flies[i].court_start/flies[i].fps/60<<","<<flies[i].mate_start/flies[i].fps/60<<","<<flies[i].mate_end/flies[i].fps/60<<endl;
     }
     myfile.close();
 }

@@ -28,7 +28,7 @@ public:
     void get_point(Mat &img);
     void adjust_lines();
     void reset_matcher();
-    void state(Mat &img);
+    void state(Mat &img, int time);
     void csv_output(int pos);
     void set_speed(int speed);
     float fps;

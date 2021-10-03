@@ -63,7 +63,7 @@ int main() {
         if (video_count%speed!=0)
             continue;
         for (index = 0;index<board_num;index++){
-            bo[index].state(src);  //状态更新
+            bo[index].state(src,video_count);  //状态更新
             string text = "ouput"+to_string(index);
 //            imshow(text,bo[index].dst);
             if (write)
