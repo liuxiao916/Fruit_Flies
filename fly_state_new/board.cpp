@@ -191,8 +191,10 @@ void board::state(Mat &img, int time) {
         matchLocate = minLocat;
         location.x = matchLocate.x+leftup.x+(int)matchimg[i].cols/2;
         location.y = matchLocate.y+leftup.y+(int)matchimg[i].rows/2;
-        if (dis_judge(location, matchcenter[i]))
+        if (dis_judge(location, matchcenter[i])){
             matchcenter[i]=location;
+            matchimg[i]=img(Rect(location.x-3,location.y-3,6,6)).clone();
+        }
 //            rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
 //            circle(img,center,2,Scalar(255,        0,0),2);
 //            rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);

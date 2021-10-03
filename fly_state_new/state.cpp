@@ -106,7 +106,6 @@ void State::update_state(vector<Point> p,int index) {
                 fly_state = 1;
                 stop_time1 = 0;
                 stop_time2 = 0;
-                court_start = index;
                 first_court = false;
             }
             if (p.size() == 2){
@@ -140,6 +139,7 @@ void State::update_state(vector<Point> p,int index) {
                 } else stop_time2 = 0;
                 if ((flag1 || flag2) && stop_time1 / fps < 5 && stop_time2 / fps < 5) { //至少有一个不静止且另外一个静止时间不超过5秒，就认为有可能还在求偶
                     if (State::chase_judge()){//是否通过追逐检测
+                        court_start = index;
                         courtship_time=courtship_time + buff_time1+1;
                         buff_time1 = 0;
                         is_court = 1;

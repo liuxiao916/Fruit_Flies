@@ -12,34 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1eea1782-2f70-44a9-9d3f-03aa30b3025b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board.h" beforeDir="false" afterPath="$PROJECT_DIR$/board.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/board.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/board.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/state.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/state.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/fly_state_new" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/fly_state_new" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/fly_state_new.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/fly_state_new.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/output.avi" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output.avi" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/output.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/output_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/output_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/state.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/state.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state.h" beforeDir="false" afterPath="$PROJECT_DIR$/state.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -102,6 +83,7 @@
       <workItem from="1633139916955" duration="6390000" />
       <workItem from="1633187931243" duration="560000" />
       <workItem from="1633229964074" duration="6258000" />
+      <workItem from="1633275378677" duration="642000" />
     </task>
     <servers />
   </component>
@@ -113,7 +95,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
