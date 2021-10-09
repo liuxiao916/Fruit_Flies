@@ -19,7 +19,8 @@ State::State() {
     average2_x = 0;
     average2_y = 0;
     size1_time =0;
-    first_court = true;
+    first_court = 0;
+    first_court1 = true;
     court_start=0;
     mate_start=0;
     mate_end=0;
@@ -74,7 +75,7 @@ void State::Trajectory(vector<Point> p){
         fly1.push(p[0]);
         fly2.push(p[0]);
     }
-    if (num >= fps/2){
+    if (num >= fps){
         av_center1.push(Point(average1_x,average1_y));
         av_center2.push(Point(average2_x, average2_y));
         average1_x = 0;
@@ -83,11 +84,11 @@ void State::Trajectory(vector<Point> p){
         average2_y = 0;
         num=0;
     }
-    average1_x = (average1_x*num+fly1.back().x)/(num+1);
-    average1_y = (average1_y*num+fly1.back().y)/(num+1);
-    average2_x = (average1_x*num+fly1.back().x)/(num+1);
-    average2_y = (average1_y*num+fly1.back().y)/(num+1);
-    num++;
+    average1_x = (average1_x*num+fly1.back().x)/(num+speed);
+    average1_y = (average1_y*num+fly1.back().y)/(num+speed);
+    average2_x = (average2_x*num+fly2.back().x)/(num+speed);
+    average2_y = (average2_y*num+fly2.back().y)/(num+speed);
+    num+= speed;
     if (fly1.size() >= 1000)
         fly1.pop();
     if (fly2.size() >= 1000)
@@ -101,18 +102,18 @@ void State::Trajectory(vector<Point> p){
 void State::update_state(vector<Point> p,int index) {
     switch (fly_state){  //状态机
         case 0: {  //求偶前
-            if (State::chase_judge() && p.size() == 2&&first_court) {
+            if (chase_judge() && p.size() == 2) {
                 is_court = 1;
                 fly_state = 1;
+                first_court++;
                 stop_time1 = 0;
                 stop_time2 = 0;
-                first_court = false;
             }
             if (p.size() == 2){
                 size2_time += speed;
                 size1_time = 0;
             }
-            if (p.size() == 1 && size2_time/fps > 4){
+            if (p.size() == 1 && size2_time/fps > 10){
                 size1_time += speed;
             }
             if (size1_time/fps > 3){
@@ -127,6 +128,8 @@ void State::update_state(vector<Point> p,int index) {
         }
         case 1: { //求偶状态
             if (p.size()==2){
+                size2_time += speed;
+                size1_time = 0;
                 bool flag1 = true, flag2 = true;
                 if (State::stop_judge(1)) {  //1号是否静止
                     stop_time1+=speed;
@@ -137,9 +140,12 @@ void State::update_state(vector<Point> p,int index) {
                     stop_time2+=speed;
                     flag2 = false;
                 } else stop_time2 = 0;
-                if ((flag1 || flag2) && stop_time1 / fps < 5 && stop_time2 / fps < 5) { //至少有一个不静止且另外一个静止时间不超过5秒，就认为有可能还在求偶
+                if ((flag1 || flag2)) { //至少有一个不静止且另外一个静止时间不超过5秒，就认为有可能还在求偶
+                    if (first_court>=1&&courtship_time/fps > 2.5&&first_court1){
+                        court_start = index-courtship_time;
+                        first_court1 = false;
+                    }
                     if (State::chase_judge()){//是否通过追逐检测
-                        court_start = index;
                         courtship_time=courtship_time + buff_time1+1;
                         buff_time1 = 0;
                         is_court = 1;
@@ -148,10 +154,10 @@ void State::update_state(vector<Point> p,int index) {
                         buff_time1 +=speed;
                         is_court = 0;
                     }
-                    if (buff_time1/fps > 3)  //连续3s没有通过追逐检测才清空缓冲时间，增加鲁棒性
+                    if (buff_time1/fps > 6)  //连续3s没有通过追逐检测才清空缓冲时间，增加鲁棒性
                         buff_time1 = 0;
                 }
-                if (stop_time1 / fps > 2 || stop_time2 / fps > 2) { //停止了超过2s，认为求偶停止，求偶时间不清空，与下一次求偶时间累积
+                else{ //停止了超过2s，认为求偶停止，求偶时间不清空，与下一次求偶时间累积
                     fly_state = 0;
                     chasetimes = 0;
                     stop_time1 = 0;
@@ -161,7 +167,7 @@ void State::update_state(vector<Point> p,int index) {
                 }
             }
             else if (p.size() == 1){ //两只果蝇合在一起
-                bool flag1 = false, flag2 = false;
+                bool flag1 = true, flag2 = true;
                 if (State::matestop_judge(1)) {  //1号是否静止
                     flag1 = true;
                 }
@@ -180,7 +186,7 @@ void State::update_state(vector<Point> p,int index) {
         }
         case 2: {//交配缓冲阶段
 //            if (State::matestop_judge(1)&& sca>1.5){
-            if (p.size() == 1 && sca>1.5){
+            if (p.size() == 1 && sca>1.3){
                 buff_time2 +=speed;
                 fly_move = 0;
             }
@@ -189,8 +195,8 @@ void State::update_state(vector<Point> p,int index) {
                 buff_time3 +=speed;
             }
             if (p.size()==2)
-                size2_time++;
-            if (fly_move/fps  > 30 || size2_time > 15){ //分离开或是持续30s动，返回求偶状态
+                size2_time+=speed;
+            if (fly_move/fps  > 30 || size2_time/fps > 5){ //分离开或是持续30s动，返回求偶状态
                 courtship_time =courtship_time + buff_time2 + buff_time3;
                 size2_time = 0;
                 buff_time2 = 0;
@@ -198,7 +204,7 @@ void State::update_state(vector<Point> p,int index) {
                 stop_time1 = 0;
                 stop_time2 = 0;
             }
-            if (buff_time2/fps > 300){  //300秒未分开，说明进入了交配阶段
+            if (buff_time2/fps > 200){  //300秒未分开，说明进入了交配阶段
                 mate_start = may_mate;
                 mate_time = mate_time + buff_time2 + buff_time3;
                 fly_state = 3;
@@ -227,19 +233,19 @@ void State::update_state(vector<Point> p,int index) {
 }
 bool State::chase_judge() {
     float distance;
-    if (!stop_judge(1)&&!stop_judge(2)){
+    if (!stop_judge(1)||!stop_judge(2)){
         distance = dis(fly1.back(), fly2.back());
-        if (distance<24)
+        if (distance<30)
             chasetimes+=speed;
         else
             chasetimes -=1;
         if (chasetimes<0)
             chasetimes = 0;
-        if (chasetimes > fps*3){
-            chasetimes = (int)fps*3;
+        if (chasetimes > fps*2){
+            chasetimes = (int)fps*2;
             return true;
         }
-        return  false;
+        return  true;
     }
     else
         return false;
@@ -250,11 +256,13 @@ bool State::stop_judge(int num) {
         return false;
     if (num==1){
         distance = dis(fly1.back(), av_center1.back());
-        return distance <= 4;
+//        cout<<"stop1=" <<distance<<endl;
+        return distance <= 7;
     }
     else {
         distance = dis(fly2.back(), av_center2.back());
-        return distance <= 4;
+//        cout<<"stop2=" <<distance<<endl;
+        return distance <= 7;
     }
 }
 bool State::matestop_judge(int num) {
@@ -263,11 +271,13 @@ bool State::matestop_judge(int num) {
         return false;
     if (num==1){
         distance = dis(fly1.back(), av_center1.back());
-        return distance <= 8;
+        return distance <= 10*speed;
     }
     else {
         distance = dis(fly2.back(), av_center2.back());
-        return distance <= 8;
+//        if (distance> 10*speed)
+//            cout<<"dis = "<<distance<<endl;
+        return distance <= 10*speed;
     }
 }
 float State::dis(Point p1, Point p2) {

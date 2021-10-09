@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     board bo[4];
     VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-    VideoCapture video("/media/jf/My Passport/Naive_CEMC CS_0527.mp4");
+    VideoCapture video("/media/jf/My Passport/SMD_Naive_NachBac_0521.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
     double all_length = video.get(CV_CAP_PROP_FRAME_COUNT);
     int index,i,board_num;
@@ -65,12 +65,12 @@ int main() {
         for (index = 0;index<board_num;index++){
             bo[index].state(src,video_count);  //状态更新
             string text = "ouput"+to_string(index);
-//            imshow(text,bo[index].dst);
+            imshow(text,bo[index].dst);
             if (write)
                 text = "ouput"+to_string(index)+".avi";
             if (index == write-1)
                 writer<<bo[index].dst;
-//            waitKey(1);
+            waitKey(1);
         }
         cout<<"done="<<video_count/(all_length)*100<<"%"<<endl;
     }

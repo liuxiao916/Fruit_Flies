@@ -131,8 +131,8 @@ void board::reset_matcher() {
     Point center;
     for (int i=0;i<4;i++){
         center = utsc.srcTri[i];
-        if (center.x>3 && center.y>3){
-            matchimg.emplace_back(tempsrc(Rect(center.x-3,center.y-3,6,6)).clone());
+        if (center.x>8 && center.y>8){
+            matchimg.emplace_back(tempsrc(Rect(center.x-8,center.y-8,16,16)).clone());
             matchcenter.emplace_back(center);
         }
     }
@@ -193,12 +193,15 @@ void board::state(Mat &img, int time) {
         location.y = matchLocate.y+leftup.y+(int)matchimg[i].rows/2;
         if (dis_judge(location, matchcenter[i])){
             matchcenter[i]=location;
-            matchimg[i]=img(Rect(location.x-3,location.y-3,6,6)).clone();
+//            matchimg[i]=img(Rect(location.x-3,location.y-3,6,6)).clone();
         }
-//            rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
-//            circle(img,center,2,Scalar(255,        0,0),2);
-//            rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);
+            rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
+            circle(img,center,2,Scalar(255,        0,0),2);
+            rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);
+
     }
+//    imshow("test",img);
+//    waitKey(1);
     M = findHomography(matchcenter, dstTri, RANSAC);
     warpPerspective(img, dst, M,
                     Size((length), (height)));
@@ -208,9 +211,11 @@ void board::state(Mat &img, int time) {
     }
     cvtColor(dst,img_gray,CV_BGR2GRAY);
     medianBlur(img_gray,img_gray,3);
-    threshold(img_gray,img_black,150,255,CV_THRESH_BINARY);
+    threshold(img_gray,img_black,153,255,CV_THRESH_BINARY);
     dilate(img_black, img_black, kernel);
     findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+//    imshow ("test", img_black);
+//    waitKey(1);
     vector<RotatedRect> boundRect(contours.size());
     for (size_t i = 0; i < contours.size(); i++)
     {
@@ -279,6 +284,8 @@ void board::state(Mat &img, int time) {
             flies[i].update_scale(scale[i]);
             string text =" ";
             string text1 = to_string(i);
+//            if (flies[i].fly_state == 0)
+//                text = "0";
             if (flies[i].fly_state == 1)
                 if (flies[i].is_court || flies[i].buff_time1/fps>3)
                     text = "Court";
@@ -306,15 +313,15 @@ void board::csv_output(int pos) {
     float CI;
     std::ofstream myfile;
     myfile.open (file);
-    myfile << " ," << "courtship_time(min),"<<"mate_time(min),"<<"CI,"<<"court start time(min),"<<"mate start time(min),"<<"mate end time(min)"<<endl;
+    myfile << " ," << "courtship_duration(min),"<<"mate_duration(min),"<<"CI,"<<"court start time(min),"<<"mate start time(min),"<<"mate end time(min)"<<endl;
     for (int i = 0; i< 37; i++)
     {
         if (flies[i].mate_start == 0)
             CI = 0;
         else
-            CI = (float)flies[i].courtship_time/(flies[i].mate_start);
+            CI = (float)flies[i].courtship_time/(flies[i].mate_start-flies[i].court_start);
         if ((flies[i].courtship_time/flies[i].fps)||(flies[i].mate_time/flies[i].fps))
-            myfile << i<< ","<< flies[i].courtship_time/flies[i].fps/60<< ","<<flies[i].mate_time/flies[i].fps/60 << "," << CI <<","<<flies[i].court_start/flies[i].fps/60<<","<<flies[i].mate_start/flies[i].fps/60<<","<<flies[i].mate_end/flies[i].fps/60<<endl;
+            myfile << i<< ","<< flies[i].courtship_time/flies[i].fps/60<< ","<<flies[i].mate_time/flies[i].fps/60 << "," << CI <<","<<flies[i].court_start/flies[i].fps/60<<","<<flies[i].mate_start/flies[i].fps/60<<","<<(flies[i].mate_start+flies[i].mate_time)/flies[i].fps/60<<endl;
     }
     myfile.close();
 }

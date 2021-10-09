@@ -16,7 +16,8 @@ public:
     int stop_time1,stop_time2;
     int average1_x,average1_y,average2_x,average2_y,num;
     int court_start,mate_start,mate_end;
-    bool first_court;
+    int first_court;
+    bool first_court1;
     int may_mate;
     float fps;
     void update_state(vector<Point> p,int index);
