@@ -9,6 +9,8 @@ void clear_queue(queue<Point>& q) {
 }
 State::State() {
     size2_time = 0;
+    mate_from_start = 0;
+    mate_from_start_flag = 1;
     fly_state = 0;
     courtship_time = 0;
     mate_time = 0;
@@ -103,16 +105,28 @@ void State::update_state(vector<Point> p,int index) {
     switch (fly_state){  //状态机
         case 0: {  //求偶前
             if (chase_judge() && p.size() == 2) {
-                is_court = 1;
-                fly_state = 1;
-                first_court++;
-                stop_time1 = 0;
-                stop_time2 = 0;
+                if (mate_from_start/fps > 100){
+                    fly_state = 4;
+                    mate_start = 0;
+                    mate_end = index;
+                    mate_time = mate_from_start;
+                }
+                else{
+                    is_court = 1;
+                    mate_from_start_flag = 0;
+                    fly_state = 1;
+                    first_court++;
+                    stop_time1 = 0;
+                    stop_time2 = 0;
+                }
             }
             if (p.size() == 2){
                 size2_time += speed;
                 size1_time = 0;
             }
+            if (p.size() == 1 && mate_from_start_flag)
+                mate_from_start += speed;
+
             if (p.size() == 1 && size2_time/fps > 10){
                 size1_time += speed;
             }
@@ -196,7 +210,7 @@ void State::update_state(vector<Point> p,int index) {
             }
             if (p.size()==2)
                 size2_time+=speed;
-            if (fly_move/fps  > 30 || size2_time/fps > 5){ //分离开或是持续30s动，返回求偶状态
+            if (fly_move/fps  > 30 || size2_time/fps > 10){ //分离开或是持续30s动，返回求偶状态
                 courtship_time =courtship_time + buff_time2 + buff_time3;
                 size2_time = 0;
                 buff_time2 = 0;
@@ -204,7 +218,7 @@ void State::update_state(vector<Point> p,int index) {
                 stop_time1 = 0;
                 stop_time2 = 0;
             }
-            if (buff_time2/fps > 200){  //300秒未分开，说明进入了交配阶段
+            if (buff_time2/fps > 150){  //300秒未分开，说明进入了交配阶段
                 mate_start = may_mate;
                 mate_time = mate_time + buff_time2 + buff_time3;
                 fly_state = 3;
@@ -235,7 +249,7 @@ bool State::chase_judge() {
     float distance;
     if (!stop_judge(1)||!stop_judge(2)){
         distance = dis(fly1.back(), fly2.back());
-        if (distance<30)
+        if (distance<30 && distance >= 5)
             chasetimes+=speed;
         else
             chasetimes -=1;

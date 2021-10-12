@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     board bo[4];
     VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-    VideoCapture video("/media/jf/My Passport/SMD_Naive_NachBac_0521.mp4");
+    VideoCapture video("/media/jf/My Passport/SMD_exp._NachBac_0521.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
     double all_length = video.get(CV_CAP_PROP_FRAME_COUNT);
     int index,i,board_num;

@@ -31,6 +31,7 @@ public:
     int is_court;
     int size2_time;
     int size1_time;
+    int mate_from_start,mate_from_start_flag;
     int speed;
     float sca;
     State();

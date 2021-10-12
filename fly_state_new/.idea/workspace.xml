@@ -13,18 +13,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1eea1782-2f70-44a9-9d3f-03aa30b3025b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/board.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/board.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/board.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/main.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/state.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/fly_state_new.dir/state.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/fly_state_new" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/fly_state_new" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/output.avi" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output.avi" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/output.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/output_0.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/output_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output_1.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/output_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output_2.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/output_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/output_3.csv" afterDir="false" />
@@ -118,6 +112,8 @@
       <workItem from="1633510375931" duration="2676000" />
       <workItem from="1633720278998" duration="5679000" />
       <workItem from="1633728549943" duration="1641000" />
+      <workItem from="1633831924062" duration="602000" />
+      <workItem from="1634004604521" duration="2480000" />
     </task>
     <servers />
   </component>
