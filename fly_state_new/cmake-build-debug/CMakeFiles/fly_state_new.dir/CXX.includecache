@@ -6,23 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/jf/Fruit/Fruit_Flies/fly_state_new/board.h
-opencv2/opencv.hpp
--
+/home/jf/Fruit/Fruit_Flies/fly_state_new/state.cpp
 state.h
 /home/jf/Fruit/Fruit_Flies/fly_state_new/state.h
-fstream
--
-
-/home/jf/Fruit/Fruit_Flies/fly_state_new/main.cpp
 opencv2/opencv.hpp
 -
-state.h
-/home/jf/Fruit/Fruit_Flies/fly_state_new/state.h
-fstream
+iostream
 -
-board.h
-/home/jf/Fruit/Fruit_Flies/fly_state_new/board.h
 
 /home/jf/Fruit/Fruit_Flies/fly_state_new/state.h
 opencv2/opencv.hpp

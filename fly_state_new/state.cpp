@@ -194,22 +194,34 @@ void State::update_state(vector<Point> p,int index) {
                     buff_time2 = 0; //交配时间不累计
                     buff_time3 = 0;
                     fly_move = 0;size2_time=0;
+                    once1 = 0;
+                    once2 = 2;
                 }
             }
             break;
         }
         case 2: {//交配缓冲阶段
 //            if (State::matestop_judge(1)&& sca>1.5){
-            if (p.size() == 1 && sca>1.3){
+            if (p.size() == 1 ){
                 buff_time2 +=speed;
                 fly_move = 0;
+                if (once2)
+                    once1++;
             }
             else{
                 fly_move +=speed;
                 buff_time3 +=speed;
             }
-            if (p.size()==2)
+            if (p.size()==2){
                 size2_time+=speed;
+                once2 += 1;
+            }
+            if (once1 && once2)
+                if (once1/once2>6){
+                    once1=0;
+                    once2=0;
+                    size2_time=0;
+                }
             if (fly_move/fps  > 30 || size2_time/fps > 10){ //分离开或是持续30s动，返回求偶状态
                 courtship_time =courtship_time + buff_time2 + buff_time3;
                 size2_time = 0;
@@ -218,7 +230,7 @@ void State::update_state(vector<Point> p,int index) {
                 stop_time1 = 0;
                 stop_time2 = 0;
             }
-            if (buff_time2/fps > 150){  //300秒未分开，说明进入了交配阶段
+            if (buff_time2/fps > 250){  //300秒未分开，说明进入了交配阶段
                 mate_start = may_mate;
                 mate_time = mate_time + buff_time2 + buff_time3;
                 fly_state = 3;

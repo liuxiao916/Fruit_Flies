@@ -88,6 +88,9 @@ void board::set_speed(int speed) {
         flies[i].speed = speed;
 }
 void board::get_point(Mat &img) {
+    namedWindow("src",0);
+
+    cvResizeWindow("src", 1080, 1080);
     bool process1 = true;
     utsc.src = img.clone();
     while(process1) {
@@ -211,16 +214,18 @@ void board::state(Mat &img, int time) {
     }
     cvtColor(dst,img_gray,CV_BGR2GRAY);
     medianBlur(img_gray,img_gray,3);
-    threshold(img_gray,img_black,153,255,CV_THRESH_BINARY);
+    threshold(img_gray,img_black,152,255,CV_THRESH_BINARY);
     dilate(img_black, img_black, kernel);
     findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
 //    imshow ("test", img_black);
 //    waitKey(1);
     vector<RotatedRect> boundRect(contours.size());
+    vector<double> contArea(contours.size());
     for (size_t i = 0; i < contours.size(); i++)
     {
         //approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
         boundRect[i] = minAreaRect(Mat(contours[i]));
+        contArea[i] = contourArea(contours[i]);
     }
     for (size_t i = 0; i < contours.size(); i++)
     {
@@ -232,9 +237,9 @@ void board::state(Mat &img, int time) {
             for (int k=0;k<4;k++){
                 if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                     int index_num = j*4+k+1;
-                    if (t_area>=14)
+                    if (t_area>=14 &&  contArea[i]>12 && contArea[i]<8000)
                     {
-                        Scalar color = Scalar(0, 0, 255);
+                        Scalar color = Scalar(0, 255, 255);
                         drawContours(dst, contours, i, color, 1);
                         P[index_num].emplace_back(boundRect[i].center);
                         boundRect[i].points(rect);
@@ -249,9 +254,9 @@ void board::state(Mat &img, int time) {
             for (int k=5;k<9;k++){
                 if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                     int index_num = j*4+(k-5)+1+add;
-                    if (t_area>=14)
+                    if (t_area>=14 &&  contArea[i]>12 && contArea[i]<8000)
                     {
-                        Scalar color = Scalar(0, 0, 255);
+                        Scalar color = Scalar(0, 255, 255);
                         drawContours(dst, contours, i, color, 1);
                         P[index_num].emplace_back(boundRect[i].center);
                         boundRect[i].points(rect);
@@ -265,9 +270,9 @@ void board::state(Mat &img, int time) {
             for (int k=10;k<14;k++){
                 if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
                     int index_num = j*4+(k-10)+1+add;
-                    if (t_area>=14)
+                    if (t_area>=14 &&  contArea[i]>12 && contArea[i]<8000)
                     {
-                        Scalar color = Scalar(0, 0, 255);
+                        Scalar color = Scalar(0, 255, 255);
                         drawContours(dst, contours, i, color, 1);
                         P[index_num].emplace_back(boundRect[i].center);
                         boundRect[i].points(rect);
