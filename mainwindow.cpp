@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
-#include <QMessageBox>
+#include <qinputdialog.h>
+#include <string>
 
 #define SCROLLBAR_MIN_VALUE 0
 #define SCROLLBAR_MAX_VALUE 30
@@ -17,18 +18,48 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_isOpenFile = false;
 
-    ui->horizontalSlider_X->setMinimum(SCROLLBAR_MIN_VALUE);
-    ui->horizontalSlider_X->setMaximum(SCROLLBAR_MAX_VALUE);
-    ui->horizontalSlider_X->setValue(15);
-    ui->label_xvalue->setText(QString::number(0));
+    ui->horizontalSlider_X1->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_X1->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_X1->setValue(15);
+    ui->label_xvalue1->setText(QString::number(0));
 
-    ui->horizontalSlider_Y->setMinimum(SCROLLBAR_MIN_VALUE);
-    ui->horizontalSlider_Y->setMaximum(SCROLLBAR_MAX_VALUE);
-    ui->horizontalSlider_Y->setValue(15);
-    ui->label_yvalue->setText(QString::number(0));
+    ui->horizontalSlider_Y1->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_Y1->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_Y1->setValue(15);
+    ui->label_yvalue1->setText(QString::number(0));
+
+    ui->horizontalSlider_X2->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_X2->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_X2->setValue(15);
+    ui->label_xvalue2->setText(QString::number(0));
+
+    ui->horizontalSlider_Y2->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_Y2->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_Y2->setValue(15);
+    ui->label_yvalue2->setText(QString::number(0));
+
+    ui->horizontalSlider_X3->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_X3->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_X3->setValue(15);
+    ui->label_xvalue3->setText(QString::number(0));
+
+    ui->horizontalSlider_Y3->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_Y3->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_Y3->setValue(15);
+    ui->label_yvalue3->setText(QString::number(0));
+
+    ui->horizontalSlider_X4->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_X4->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_X4->setValue(15);
+    ui->label_xvalue4->setText(QString::number(0));
+
+    ui->horizontalSlider_Y4->setMinimum(SCROLLBAR_MIN_VALUE);
+    ui->horizontalSlider_Y4->setMaximum(SCROLLBAR_MAX_VALUE);
+    ui->horizontalSlider_Y4->setValue(15);
+    ui->label_yvalue4->setText(QString::number(0));
+
 
     ui->progressBar->setValue(0);
-
 }
 
 MainWindow::~MainWindow()
@@ -36,43 +67,180 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::View(Mat mtx)
+QImage	Mat2QImage(cv::Mat mtx)
+{
+    switch (mtx.type())
+    {
+    case CV_8UC1:
+        {
+            QImage img((const unsigned char *)(mtx.data), mtx.cols, mtx.rows, mtx.cols, QImage::Format_Grayscale8);
+            return img;
+        }
+        break;
+    case CV_8UC3:
+        {
+            QImage img((const unsigned char *)(mtx.data), mtx.cols, mtx.rows, mtx.cols * 3, QImage::Format_RGB888);
+            return img.rgbSwapped();
+        }
+        break;
+    case CV_8UC4:
+        {
+            QImage img((const unsigned char *)(mtx.data), mtx.cols, mtx.rows, mtx.cols * 4, QImage::Format_ARGB32);
+            return img;
+        }
+        break;
+    default:
+        {
+            QImage img;
+            return img;
+        }
+        break;
+    }
+}
+
+void MainWindow::View1(Mat mtx)
 {
     QImage disImage1 = Mat2QImage(mtx);
 
-    ui->label_view->setPixmap(QPixmap::fromImage(disImage1.scaled(ui->label_view->width(),ui->label_view->height(),Qt::KeepAspectRatio)));
+    ui->label_view1->setPixmap(QPixmap::fromImage(disImage1.scaled(ui->label_view1->width(),ui->label_view1->height(),Qt::KeepAspectRatio)));
 }
-
-Mat MainWindow::Draw(Mat mtx)
+void MainWindow::View2(Mat mtx)
 {
-    diffx = s1 - 15;
-    diffy = s2 - 15;
-    x[0] = 0;
-    y[0] = 36;
-    for (int i=1;i<5;i++)
-       x[i] = x[i-1]+66;
-    x[5] = 333;
-    for (int i=6;i<10;i++)
-       x[i] = x[i-1]+66;
-    x[10] = 666;
-    for (int i=11;i<15;i++)
-       x[i] = x[i-1]+66;
-    for (int i=1;i<4;i++)
-       y[i] = y[i-1]+66;
-    for (int i=1;i<15;i++)
-       x[i] +=diffx;
-    for (int i=0;i<4;i++)
-       y[i] +=diffy;
-    Mat img2;
-    img2 = mtx.clone();
-    for (int i=0;i<4;i++)
-       line(img2,Point(0, y[i]),Point(155*6, y[i]),Scalar(0,0,255),2);
-    for (int i=0;i<15;i++)
-       line(img2,Point(x[i], 0),Point(x[i], 270),Scalar(0,0,255),2);
-    cv::imwrite("output1.jpg", img2);
-    return img2;
+    QImage disImage2 = Mat2QImage(mtx);
+
+    ui->label_view2->setPixmap(QPixmap::fromImage(disImage2.scaled(ui->label_view2->width(),ui->label_view2->height(),Qt::KeepAspectRatio)));
+}
+void MainWindow::View3(Mat mtx)
+{
+    QImage disImage3 = Mat2QImage(mtx);
+
+    ui->label_view3->setPixmap(QPixmap::fromImage(disImage3.scaled(ui->label_view3->width(),ui->label_view3->height(),Qt::KeepAspectRatio)));
+}
+void MainWindow::View4(Mat mtx)
+{
+    QImage disImage4 = Mat2QImage(mtx);
+
+    ui->label_view4->setPixmap(QPixmap::fromImage(disImage4.scaled(ui->label_view4->width(),ui->label_view4->height(),Qt::KeepAspectRatio)));
+}
+void MainWindow::ViewDraw(int num){
+    switch (num) {
+        case 1:{
+            View1(bo[0].Draw());
+            break;
+        }
+        case 2:{
+            View1(bo[0].Draw());
+            View2(bo[1].Draw());
+            break;
+        }
+        case 3:{
+            View1(bo[0].Draw());
+            View2(bo[1].Draw());
+            View3(bo[2].Draw());
+            break;
+        }
+        case 4:{
+            View1(bo[0].Draw());
+            View2(bo[1].Draw());
+            View3(bo[2].Draw());
+            View4(bo[3].Draw());
+            break;
+        }
+        default:{
+            View1(bo[0].Draw());
+            break;
+        }
+    }
+}
+void MainWindow::ViewDst(int num){
+    switch (num) {
+        case 1:{
+            View1(bo[0].dst);
+            break;
+        }
+        case 2:{
+            View1(bo[0].dst);
+            View2(bo[1].dst);
+            break;
+        }
+        case 3:{
+            View1(bo[0].dst);
+            View2(bo[1].dst);
+            View3(bo[2].dst);
+            break;
+        }
+        case 4:{
+            View1(bo[0].dst);
+            View2(bo[1].dst);
+            View3(bo[2].dst);
+            View4(bo[3].dst);
+            break;
+        }
+        default:{
+            View1(bo[0].dst);
+            break;
+        }
+    }
 }
 
+void MainWindow::Writer(int index,String videoname){
+    switch (index) {
+        case 1:{
+            writer1.open(videoname+"1.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            break;
+        }
+        case 2:{
+            writer1.open(videoname+"1.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer2.open(videoname+"2.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            break;
+        }
+        case 3:{
+            writer1.open(videoname+"1.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer2.open(videoname+"2.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer3.open(videoname+"3.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            break;
+        }
+        case 4:{
+            writer1.open(videoname+"1.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer2.open(videoname+"2.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer3.open(videoname+"3.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer4.open(videoname+"4.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            break;
+        }
+        default:{
+            writer1.open(videoname+"1.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer2.open(videoname+"2.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer3.open(videoname+"3.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            writer4.open(videoname+"4.avi",CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
+            break;
+        }
+    }
+}
+
+
+void MainWindow::SaveVideo(int index,cv::Mat dst){
+    switch (index) {
+        case 0:{
+            writer1 << dst;
+            break;
+        }
+        case 1:{
+            writer2 << dst;
+            break;
+        }
+        case 2:{
+            writer3 << dst;
+            break;
+        }
+        case 3:{
+            writer4 << dst;
+            break;
+        }
+        default:{
+            break;
+        }
+    }
+}
 
 
 void MainWindow::on_pushButton_open_clicked()
@@ -104,84 +272,64 @@ void MainWindow::on_pushButton_open_clicked()
     ui->progressBar->setRange(0,all_length);
     ui->progressBar->setValue(0);
 
-    Mat temp;
-    for (int i=0;i<37;i++)
-       flies[i].set_fps(fps);
-    dstTri.resize(4);
-    callbackP utsc;
-    char key;
+    bool speedisok = false;
+    speed = QInputDialog::getInt(this,
+                                     "Input Speed",
+                                     "请输入处理速率（1～10）",
+                                     1,
+                                     1,
+                                     10,
+                                     1,
+                                     &speedisok);
 
+    if(speedisok && speed>0){
+        QString str1 = QString("将以%1的倍速处理视频" ).arg(speed);
+        ui->statusbar->showMessage(str1);
+    }
+
+
+    for (int index=0;index<4;index++){  //初始化帧率
+        for (int i=0;i<37;i++)
+            bo[index].flies[i].set_fps(fps);
+        bo[index].fps = fps;
+        bo[index].set_speed(speed);
+    }
+
+    video >> mid;
+    if (!(mid.rows==1280||mid.cols==1280)) //1080p就不用resize了
+        resize_flag=true;
     if (mid.rows>mid.cols)
-       dsize=Size(int(mid.cols*1280/mid.rows),1280);
+        dsize=Size(int(mid.cols*1280/mid.rows),1280);
     else
-       dsize=Size(1280,int(mid.rows*1280/mid.cols));
-    cv::resize(mid, utsc.src, dsize);
-    //cout<<utsc.src.size<<endl;
-    tempsrc = utsc.src.clone();
-    namedWindow("src", 0);
-    resizeWindow("src", 1280, 1080);
+        dsize=Size(1280,int(mid.rows*1280/mid.cols));
+    if (resize_flag)
+        cv::resize(mid, src, dsize);
+    else
+        src = mid.clone();
 
-    bool process1=true;
-    while(process1) {
-        imshow("src", utsc.src);
-        setMouseCallback("src", onMouse, (void *) &utsc);  //类型转换
-        if (utsc.clickTimes == 4) {
-            dstTri[0].x = 0;
-            dstTri[0].y = 0;
-            dstTri[1].x = length;
-            dstTri[1].y = 0;
-            dstTri[2].x = length;
-            dstTri[2].y = height;
-            dstTri[3].x = 0;
-            dstTri[3].y = height;
+    bool Inputisok = false;
+    board_num = QInputDialog::getInt(this,
+                                     "Input BoardNum",
+                                     "请输入待处理板子的数量（不大于4）",
+                                     1,
+                                     1,
+                                     4,
+                                     1,
+                                     &Inputisok);
 
-            //计算透视矩阵
-            M = findHomography(utsc.srcTri, dstTri, RANSAC);
-            //图像透视变换
-            warpPerspective(utsc.src, dst, M,Size((length), (height)));
-            ui->statusbar->showMessage(tr("透视变换完成"));
-            cv::imwrite("output.jpg", dst);
-            process1 = false;
-        } else {
-            QString str1 = QString("需要从左上角开始，顺时针依次点矩形的四个角！ 现在点击了%1次" ).arg(utsc.clickTimes);
-            ui->statusbar->showMessage(str1);
-        }
-        key = waitKey(1);
-        if (key == 'q')
-            break;
+    if(Inputisok && board_num>0){
+        QString str1 = QString("输入视频中含有%1块实验板" ).arg(board_num);
+        ui->statusbar->showMessage(str1);
     }
 
-    for (int i=0;i<4;i++){
-        center = utsc.srcTri[i];
-        if (center.x>3 && center.y>3){
-            matchimg.emplace_back(tempsrc(Rect(center.x-3,center.y-3,6,6)).clone());
-            matchcenter.emplace_back(center);
-        }
+    for (int index = 0;index<board_num;index++){
+        ui->statusbar->showMessage(tr("需要从左上角开始，顺时针依次点矩形的四个角！ "));
+        bo[index].get_point(src);  //用鼠标点四个柱子
+        bo[index].reset_matcher();  //初始化模板匹配
     }
-
-    cv::destroyAllWindows();
-    img = dst.clone();
-    View(Draw(img));
-}
-
-
-void MainWindow::on_horizontalSlider_X_valueChanged(int value)
-{
-    if(m_isOpenFile){
-        s1 = value;
-        ui->label_xvalue->setText(QString::number(s1-15));
-        View(Draw(img));
-    }
-}
-
-
-void MainWindow::on_horizontalSlider_Y_valueChanged(int value)
-{
-    if(m_isOpenFile){
-        s2 = value;
-        ui->label_yvalue->setText(QString::number(s2-15));
-        View(Draw(img));
-    }
+    QString str1 = QString("输入视频中含有%1块实验板" ).arg(board_num);
+    ui->statusbar->showMessage(str1);
+    ViewDraw(board_num);
 }
 
 
@@ -189,14 +337,54 @@ void MainWindow::on_pushButton_start_clicked()
 {
     if(m_isOpenFile)
     {
-        ui->statusbar->showMessage(tr("指定视频存储路径"));
-        QString fileName;
-        fileName = QFileDialog::getSaveFileName(this,tr("Open Video"), "output.avi", tr("csv Files (*.avi)"));
-        writer.open(fileName.toStdString(),CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-        timer->start(25);
+        savevideo = QMessageBox::question(this,"提示","是否存储处理视频",QMessageBox::Yes|QMessageBox::No);
+        if(savevideo == QMessageBox::Yes){
+            ui->statusbar->showMessage(tr("指定视频存储路径"));
+            QString fileName;
+            fileName = QFileDialog::getSaveFileName(this,tr("Open Video"), "output.avi", tr("video Files (*.avi)"));
+            string videoname = fileName.toStdString().substr(0,fileName.toStdString().find('.'));
+            Writer(board_num,videoname);
+        }
+        timer->start(20);      //单位是毫秒
     }
 }
 
+void MainWindow::ProcessVideo(){
+    if (video_count>=(all_length-2))
+    {
+        timer->stop();
+        ui->statusbar->showMessage(tr("处理完成"));
+        ui->progressBar->setValue(all_length);
+    }
+    for (int i = 0;i < speed ;i++ ) {
+        video >> mid;
+        video_count++;
+        if (video_count%speed!=0){
+            continue;
+        }
+
+        if (mid.empty())
+            break;
+        if (resize_flag)
+            cv::resize(mid, src, dsize);
+        else
+            src = mid.clone();
+
+
+        ui->progressBar->setValue(video_count);
+        QString str2 = QString("已经处理了%1帧" ).arg(video_count);
+        ui->statusbar->showMessage(str2);
+        for (int index = 0;index<board_num;index++){
+            bo[index].state(src,video_count);  //状态更新
+            if(savevideo == QMessageBox::Yes){
+                SaveVideo(index, bo[index].dst);
+            }
+        }
+    }
+
+    ViewDst(board_num);
+
+}
 
 void MainWindow::on_pushButton_out_clicked()
 {
@@ -204,170 +392,77 @@ void MainWindow::on_pushButton_out_clicked()
         ui->statusbar->showMessage(tr("指定表格存储路径"));
         QString fileName;
         fileName = QFileDialog::getSaveFileName(this,tr("Open Csv"), "output.csv", tr("csv Files (*.csv)"));
-        outcsv(flies, fileName.toStdString(),37);
+        string csvname = fileName.toStdString().substr(0,fileName.toStdString().find('.'));
+        for (int index=0;index<board_num;index++){
+            bo[index].csv_output(csvname+to_string(index+1)+".csv"); //输出板子对应的结果
+        }
         ui->statusbar->showMessage(tr("输出完成"));
         ui->progressBar->setValue(all_length);
     }
 }
 
-void MainWindow::ProcessVideo()
+
+void MainWindow::on_horizontalSlider_X1_valueChanged(int value)
 {
-    if (video_count>=(all_length-2))
-    {
-        timer->stop();
-        ui->progressBar->setValue(all_length);
+    if(m_isOpenFile){
+        bo[0].s1 = value;
+        ui->label_xvalue1->setText(QString::number(bo[0].s1-15));
+        ViewDraw(board_num);
     }
-        ui->progressBar->setValue(video_count);
-        video >> mid;
-
-        cv::resize(mid, img, dsize);
-        video_count++;
-
-        for (int i=0;i<4;i++){
-            center = matchcenter[i];
-            if (center.x>20)
-                leftup.x=center.x-20;
-            else
-                leftup.x = 0;
-            if (center.y>20)
-                leftup.y=center.y-20;
-            else
-                leftup.y = 0;
-            if (center.x+20>img.cols)
-                rightdown.x = img.cols;
-            else
-                rightdown.x = center.x+20;
-            if (center.y+20>img.rows)
-                rightdown.y = img.rows;
-            else
-                rightdown.y = center.y+20;
-            wid = rightdown.x-leftup.x;
-            heigh = rightdown.y - leftup.y;
-            srcimg = img(Rect(leftup.x,leftup.y,wid,heigh)).clone();
-            matchTemplate(srcimg, matchimg[i], dstimg, TM_SQDIFF);
-            normalize(dstimg,dstimg,0, 1, NORM_MINMAX, -1, Mat());
-            double minvalue,maxvalue;
-            Point minLocat,maxLocat;
-            Point matchLocate,location;
-            minMaxLoc(dstimg, &minvalue, &maxvalue, &minLocat, &maxLocat, Mat());
-            matchLocate = minLocat;
-            location.x = matchLocate.x+leftup.x+(int)matchimg[i].cols/2;
-            location.y = matchLocate.y+leftup.y+(int)matchimg[i].rows/2;
-            if (dis_judge(location, matchcenter[i]))
-                matchcenter[i]=location;
-//            rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
-//            circle(img,center,2,Scalar(255,0,0),2);
-//            rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);
-        }
-        M = findHomography(matchcenter, dstTri, RANSAC);
-        warpPerspective(img, dst, M,
-                        Size((length), (height)));
-        for (int i=0;i<37;i++){
-            P[i].clear();
-            scale[i] = 0;
-        }
-        cvtColor(dst,img_gray,CV_BGR2GRAY);
-        threshold(img_gray,img_black,160,255,CV_THRESH_BINARY);
-        dilate(img_black, img_black, kernel);
-        findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
-        vector<RotatedRect> boundRect(contours.size());
-        for (size_t i = 0; i < contours.size(); i++)
-        {
-            //approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-            boundRect[i] = minAreaRect(Mat(contours[i]));
-        }
-        for (size_t i = 0; i < contours.size(); i++)
-        {
-            int t_area = boundRect[i].size.area();
-            int t_x = boundRect[i].center.x;
-            int t_y = boundRect[i].center.y;
-            int add = 0;
-            for (int j=0;j<3;j++)
-                for (int k=0;k<4;k++){
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
-                        int index_num = j*4+k+1;
-                        if (t_area>=13)
-                        {
-                            Scalar color = Scalar(0, 0, 255);
-                            drawContours(dst, contours, i, color, 1);
-                            P[index_num].emplace_back(boundRect[i].center);
-                            boundRect[i].points(rect);
-                            float ca = calc(rect);
-                            scale[index_num] = ca;
-//                            cout<<"长宽比"<<ca<<endl;
-                        }
-                    }
-                }
-            add = 12;
-            for (int j=0;j<3;j++)
-                for (int k=5;k<9;k++){
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
-                        int index_num = j*4+(k-5)+1+add;
-                        if (t_area>=13)
-                        {
-                            Scalar color = Scalar(0, 0, 255);
-                            drawContours(dst, contours, i, color, 1);
-                            P[index_num].emplace_back(boundRect[i].center);
-                            boundRect[i].points(rect);
-                            float ca = calc(rect);
-                            scale[index_num] = ca;
-                        }
-                    }
-                }
-            add = 24;
-            for (int j=0;j<3;j++)
-                for (int k=10;k<14;k++){
-                    if ((t_x>x[k]&&t_x<x[k+1])&&(t_y>y[j]&&t_y<y[j+1])){
-                        int index_num = j*4+(k-10)+1+add;
-                        if (t_area>=13)
-                        {
-                            Scalar color = Scalar(0, 0, 255);
-                            drawContours(dst, contours, i, color, 1);
-                            P[index_num].emplace_back(boundRect[i].center);
-                            boundRect[i].points(rect);
-                            float ca = calc(rect);
-                            scale[index_num] = ca;
-                        }
-                    }
-                }
-        }
-        for (int i=0;i<37;i++){
-            if (!P[i].empty() && P[i].size()<3){ //有2个果蝇才处理
-                flies[i].Trajectory(P[i]);
-                flies[i].update_state(P[i]);
-                flies[i].update_scale(scale[i]);
-                string text =" ";
-                string text1 = to_string(i);
-                if (flies[i].fly_state == 1)
-                {
-                    if (flies[i].is_court || flies[i].buff_time1/fps>3){
-                        text = "Court";
-                    }else{
-                        text = "MayCourt";
-                    }
-                }
-                if (flies[i].fly_state == 2)
-                    text = "3";
-                if (flies[i].fly_state == 3)
-                    text = "4";
-                putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 120, 255), 2);
-                if (i==32){
-                    text=to_string(scale[i]);
-                    putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 0), 2);
-                }
-//                if (flies[i].stop_judge(1))
-//                    putText(dst, "stop", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
-//                else
-//                    putText(dst, "move", flies[i].fly1.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 255), 2);
-            }
-        }
-
-
-        View(dst);
-        writer<<dst;
-        QString str2 = QString("已经处理了%1帧" ).arg(video_count);
-        ui->statusbar->showMessage(str2);
-
-
 }
-
+void MainWindow::on_horizontalSlider_Y1_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[0].s2 = value;
+        ui->label_yvalue1->setText(QString::number(bo[0].s2-15));
+        ViewDraw(board_num);
+    }
+}
+void MainWindow::on_horizontalSlider_X2_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[1].s1 = value;
+        ui->label_xvalue2->setText(QString::number(bo[1].s1-15));
+        ViewDraw(board_num);
+    }
+}
+void MainWindow::on_horizontalSlider_Y2_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[1].s2 = value;
+        ui->label_yvalue2->setText(QString::number(bo[1].s2-15));
+        ViewDraw(board_num);
+    }
+}
+void MainWindow::on_horizontalSlider_X3_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[2].s1 = value;
+        ui->label_xvalue3->setText(QString::number(bo[2].s1-15));
+        ViewDraw(board_num);
+    }
+}
+void MainWindow::on_horizontalSlider_Y3_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[2].s2 = value;
+        ui->label_yvalue3->setText(QString::number(bo[2].s2-15));
+        ViewDraw(board_num);
+    }
+}
+void MainWindow::on_horizontalSlider_X4_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[3].s1 = value;
+        ui->label_xvalue4->setText(QString::number(bo[3].s1-15));
+        ViewDraw(board_num);
+    }
+}
+void MainWindow::on_horizontalSlider_Y4_valueChanged(int value)
+{
+    if(m_isOpenFile){
+        bo[3].s2 = value;
+        ui->label_yvalue4->setText(QString::number(bo[3].s2-15));
+        ViewDraw(board_num);
+    }
+}

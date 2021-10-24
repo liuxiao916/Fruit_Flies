@@ -9,15 +9,15 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    board.cpp \
     main.cpp \
     mainwindow.cpp \
-    state.cpp \
-    util.cpp
+    state.cpp
 
 HEADERS += \
+    board.h \
     mainwindow.h \
-    state.h \
-    util.h
+    state.h
 
 FORMS += \
     mainwindow.ui
@@ -32,3 +32,7 @@ INCLUDEPATH += /usr/local/include \
                /usr/local/include/opencv2
 
 LIBS += /usr/local/lib/libopencv_*
+        /home/liuxiao/Qt5.12.11/5.12.11/gcc_64/lib/libQt5*
+
+QMAKE_LFLAGS += -no-pie
+

@@ -6,98 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1350</width>
+    <height>850</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QLabel" name="label_view1">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>761</width>
-      <height>351</height>
+      <x>50</x>
+      <y>10</y>
+      <width>600</width>
+      <height>300</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_view">
-       <property name="text">
-        <string>Waiting for Input</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_open">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>490</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(186, 189, 182);</string>
     </property>
     <property name="text">
-     <string>打开视频</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_out">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>490</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>导出结果</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_start">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>490</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>开始运行</string>
+     <string>Waiting for Input</string>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>450</y>
-      <width>751</width>
-      <height>19</height>
+      <x>50</x>
+      <y>310</y>
+      <width>591</width>
+      <height>21</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_1">
      <item>
-      <widget class="QLabel" name="label_Y">
+      <widget class="QLabel" name="label_X1">
        <property name="text">
-        <string>Y</string>
+        <string>X</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_yvalue">
+      <widget class="QLabel" name="label_xvalue1">
        <property name="text">
-        <string>Yvalue</string>
+        <string>Xvalue</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSlider" name="horizontalSlider_Y">
+      <widget class="QSlider" name="horizontalSlider_X1">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -105,16 +63,295 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>390</y>
-      <width>751</width>
-      <height>27</height>
+      <x>50</x>
+      <y>330</y>
+      <width>591</width>
+      <height>21</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_Y1">
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_yvalue1">
+       <property name="text">
+        <string>Yvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_Y1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>310</y>
+      <width>591</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_X2">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_xvalue2">
+       <property name="text">
+        <string>Xvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_X2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>330</y>
+      <width>591</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="label_Y2">
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_yvalue2">
+       <property name="text">
+        <string>Yvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_Y2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_view2">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>10</y>
+      <width>600</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(186, 189, 182);</string>
+    </property>
+    <property name="text">
+     <string>Waiting for Input</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_5">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>660</y>
+      <width>591</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="label_X3">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_xvalue3">
+       <property name="text">
+        <string>Xvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_X3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_6">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>660</y>
+      <width>591</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <widget class="QLabel" name="label_X4">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_xvalue4">
+       <property name="text">
+        <string>Xvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_X4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_7">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>680</y>
+      <width>591</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <widget class="QLabel" name="label_Y4">
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_yvalue4">
+       <property name="text">
+        <string>Yvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_Y4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_8">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>680</y>
+      <width>591</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_Y3">
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_yvalue3">
+       <property name="text">
+        <string>Yvalue</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="horizontalSlider_Y3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_view4">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>360</y>
+      <width>600</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(186, 189, 182);</string>
+    </property>
+    <property name="text">
+     <string>Waiting for Input</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_view3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>360</y>
+      <width>600</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(186, 189, 182);</string>
+    </property>
+    <property name="text">
+     <string>Waiting for Input</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_9">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>720</y>
+      <width>1251</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_10">
      <item>
       <widget class="QLabel" name="label_progress">
        <property name="text">
@@ -131,38 +368,44 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QPushButton" name="pushButton_out">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>430</y>
-      <width>751</width>
-      <height>19</height>
+      <x>1200</x>
+      <y>760</y>
+      <width>89</width>
+      <height>25</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_X">
-       <property name="text">
-        <string>X</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_xvalue">
-       <property name="text">
-        <string>Xvalue</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="horizontalSlider_X">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="text">
+     <string>导出结果</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_open">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>760</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开视频</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_start">
+    <property name="geometry">
+     <rect>
+      <x>1090</x>
+      <y>760</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>开始运行</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -170,7 +413,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1350</width>
      <height>22</height>
     </rect>
    </property>

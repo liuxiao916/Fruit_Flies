@@ -2,10 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QTimer>
 #include <opencv2/opencv.hpp>
 #include "state.h"
-#include "util.h"
+#include "board.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,64 +18,66 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void View1(cv::Mat mtx);
+    void View2(cv::Mat mtx);
+    void View3(cv::Mat mtx);
+    void View4(cv::Mat mtx);
+    void ViewDraw(int num);
+    void ViewDst(int num);
+    void SaveVideo(int index,cv::Mat dst);
+    void Writer(int index,String videoname);
     ~MainWindow();
-    void View(cv::Mat mtx);
-    cv::Mat Draw(cv::Mat mtx);
 
 private slots:
     void on_pushButton_open_clicked();
-
-    void on_horizontalSlider_X_valueChanged(int value);
-
-    void on_horizontalSlider_Y_valueChanged(int value);
 
     void on_pushButton_start_clicked();
 
     void on_pushButton_out_clicked();
 
+    void on_horizontalSlider_X1_valueChanged(int value);
+
+    void on_horizontalSlider_Y1_valueChanged(int value);
+
+    void on_horizontalSlider_X2_valueChanged(int value);
+
+    void on_horizontalSlider_Y2_valueChanged(int value);
+
+    void on_horizontalSlider_X3_valueChanged(int value);
+
+    void on_horizontalSlider_Y3_valueChanged(int value);
+
+    void on_horizontalSlider_X4_valueChanged(int value);
+
+    void on_horizontalSlider_Y4_valueChanged(int value);
+
     void ProcessVideo();
 
 private:
     Ui::MainWindow *ui;
-
     QTimer *timer;
 
-    bool m_isOpenFile;
+    board bo[4];
+    int board_num = 1;          //处理板子的数目
+    int speed =2;               //处理速度
 
-    Mat img;
+
+    bool m_isOpenFile;
     cv::VideoCapture video;
-    cv::VideoWriter writer;
+    cv::Mat mid;            //处理中的图片
     float fps;
     double all_length;
-    vector<Point2f> dstTri;
-    State flies[37];
 
-    int s1=15,s2=15;
-    int diffx_up = 0,diffx_down = 0,diffy_up = 0,diffy_down = 0;
-    int diffx = 0;
-    int diffy = 0;
-    int x[15],y[4];
+    cv::Mat dst,src,gray;   //意义不明的图片
+    bool resize_flag=false;
+    int video_count=0;
+    cv::Size dsize;
 
-    int length = 155*6;
-    int height = 45*6;
-    vector<Point> P[37];
-    float scale[37];
-
-    Mat mid;
-    Mat srcimg,dstimg;
-    Mat dst,src,gray;
-    Mat M,tempsrc;
-    vector<Mat> matchimg;
-    vector<Point> matchcenter;
-    Point leftup,rightdown,center;
-    Size dsize;
-
-    Mat img_gray,img_black;
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3), Point(-1, -1));
-    vector<vector<cv::Point>> contours;
-    vector<cv::Vec4i> hierarchy;
-    Point2f rect[4];
-    int video_count=0,wid,heigh;
+    QMessageBox::StandardButton savevideo;
+    cv::VideoWriter writer1;
+    cv::VideoWriter writer2;
+    cv::VideoWriter writer3;
+    cv::VideoWriter writer4;
 
 };
 #endif // MAINWINDOW_H
