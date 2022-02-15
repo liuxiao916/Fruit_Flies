@@ -230,7 +230,7 @@ void State::update_state(vector<Point> p,int index) {
                 stop_time1 = 0;
                 stop_time2 = 0;
             }
-            if (buff_time2/fps > 250){  //300秒未分开，说明进入了交配阶段
+            if (buff_time2/fps > 300){  //300秒未分开，说明进入了交配阶段
                 mate_start = may_mate;
                 mate_time = mate_time + buff_time2 + buff_time3;
                 fly_state = 3;
@@ -245,7 +245,7 @@ void State::update_state(vector<Point> p,int index) {
             }
             else
                 fly_move+=speed;
-            if (fly_move/fps > 5) //分开累计10秒认为交配已经结束
+            if (fly_move/fps > 9) //分开累计10秒认为交配已经结束
             {
                 fly_state = 4;
                 mate_end = index;

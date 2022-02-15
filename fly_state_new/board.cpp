@@ -201,10 +201,10 @@ void board::state(Mat &img, int time) {
             rectangle(img,leftup,Point(leftup.x+wid,leftup.y+heigh),Scalar(0,255,0),2);
             circle(img,center,2,Scalar(255,        0,0),2);
             rectangle(img, Point(matchLocate.x+leftup.x,matchLocate.y+leftup.y),Point(matchLocate.x+matchimg[i].cols+leftup.x,matchLocate.y+matchimg[i].rows+leftup.y),Scalar(0,0,255),2);
-
     }
-//    imshow("test",img);
-//    waitKey(1);
+    imshow("test",img);
+    imwrite ("img.jpg",img);
+    waitKey(1);
     M = findHomography(matchcenter, dstTri, RANSAC);
     warpPerspective(img, dst, M,
                     Size((length), (height)));
@@ -217,8 +217,9 @@ void board::state(Mat &img, int time) {
     threshold(img_gray,img_black,152,255,CV_THRESH_BINARY);
     dilate(img_black, img_black, kernel);
     findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
-//    imshow ("test", img_black);
-//    waitKey(1);
+    imshow ("test2", img_black);
+    imwrite ("black.jpg",img_black);
+    waitKey(1);
     vector<RotatedRect> boundRect(contours.size());
     vector<double> contArea(contours.size());
     for (size_t i = 0; i < contours.size(); i++)
@@ -282,6 +283,10 @@ void board::state(Mat &img, int time) {
                 }
             }
     }
+
+    imshow ("test3", dst);
+    imwrite ("dst.jpg",dst);
+    waitKey(1);
     for (int i=0;i<37;i++){
         if (!P[i].empty() && P[i].size()<3){ //有2个果蝇才处理
             flies[i].Trajectory(P[i]);
@@ -325,8 +330,7 @@ void board::csv_output(int pos) {
             CI = 0;
         else
             CI = (float)flies[i].courtship_time/(flies[i].mate_start-flies[i].court_start);
-        if ((flies[i].courtship_time/flies[i].fps)||(flies[i].mate_time/flies[i].fps))
-            myfile << i<< ","<< flies[i].courtship_time/flies[i].fps/60<< ","<<flies[i].mate_time/flies[i].fps/60 << "," << CI <<","<<flies[i].court_start/flies[i].fps/60<<","<<flies[i].mate_start/flies[i].fps/60<<","<<(flies[i].mate_start+flies[i].mate_time)/flies[i].fps/60<<endl;
+        myfile << i<< ","<< flies[i].courtship_time/flies[i].fps/60<< ","<<flies[i].mate_time/flies[i].fps/60 << "," << CI <<","<<flies[i].court_start/flies[i].fps/60<<","<<flies[i].mate_start/flies[i].fps/60<<","<<(flies[i].mate_start+flies[i].mate_time)/flies[i].fps/60<<endl;
     }
     myfile.close();
 }

@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     board bo[4];
     VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-    VideoCapture video("/media/jf/My Passport/gy/211015.mp4");
+    VideoCapture video("/media/jf/My Passport/SMD_Naive_NachBac_0521.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
     double all_length = video.get(CV_CAP_PROP_FRAME_COUNT);
     int index,i,board_num;
@@ -75,6 +75,9 @@ int main() {
         cout<<"done="<<video_count/(all_length)*100<<"%"<<endl;
     }
     for (index=0;index<board_num;index++)
+        for (int i=0;i<37;i++)
+            if (bo[index].flies[i].fly_state == 3)
+                bo[index].flies[i].mate_time = -999999;
         bo[index].csv_output(index); //输出板子对应的结果
     return 0;
 }
