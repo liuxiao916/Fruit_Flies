@@ -250,6 +250,11 @@ void MainWindow::on_pushButton_open_clicked()
     {
         return;
     }
+    string path = fileName.toStdString();
+    string::size_type iPos = path.find_last_of('/')+1;
+    string videoname = path.substr(iPos, path.length() - iPos);
+    ui->label_videoname->setText(QString::fromStdString(videoname));
+
     video.open(fileName.toStdString());
     video >> mid;
 
@@ -394,8 +399,12 @@ void MainWindow::on_pushButton_out_clicked()
         fileName = QFileDialog::getSaveFileName(this,tr("Open Csv"), "output.csv", tr("csv Files (*.csv)"));
         string csvname = fileName.toStdString().substr(0,fileName.toStdString().find('.'));
         for (int index=0;index<board_num;index++){
+            for (int i=0;i<37;i++)
+                if (bo[index].flies[i].fly_state == 3)
+                    bo[index].flies[i].mate_time = -999999;
             bo[index].csv_output(csvname+to_string(index+1)+".csv"); //输出板子对应的结果
         }
+        saveall(fileName.toStdString(),board_num);
         ui->statusbar->showMessage(tr("输出完成"));
         ui->progressBar->setValue(all_length);
     }
@@ -465,4 +474,23 @@ void MainWindow::on_horizontalSlider_Y4_valueChanged(int value)
         ui->label_yvalue4->setText(QString::number(bo[3].s2-15));
         ViewDraw(board_num);
     }
+}
+
+void MainWindow::saveall(string filepath, int num){
+    float CI;
+    std::ofstream myfile;
+    myfile.open (filepath);
+    myfile << " ," << "courtship_duration(min),"<<"mate_duration(min),"<<"CI,"<<"court start time(min),"<<"mate start time(min),"<<"mate end time(min)"<<endl;
+
+    for (int index=0;index<num;index++){
+        for (int i = 0; i< 37; i++)
+        {
+            if (bo[index].flies[i].mate_start == 0)
+                CI = 0;
+            else
+                CI = (float)bo[index].flies[i].courtship_time/(bo[index].flies[i].mate_start-bo[index].flies[i].court_start);
+            myfile << i<< ","<< bo[index].flies[i].courtship_time/bo[index].flies[i].fps/60<< ","<<bo[index].flies[i].mate_time/bo[index].flies[i].fps/60 << "," << CI <<","<<bo[index].flies[i].court_start/bo[index].flies[i].fps/60<<","<<bo[index].flies[i].mate_start/bo[index].flies[i].fps/60<<","<<(bo[index].flies[i].mate_start+bo[index].flies[i].mate_time)/bo[index].flies[i].fps/60<<endl;
+        }
+    }
+    myfile.close();
 }

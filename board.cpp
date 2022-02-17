@@ -130,8 +130,8 @@ void board::get_point(Mat &img) {
             imwrite("output.jpg", dst);
             break;
         } else {
-            cout << "需要从左上角开始，顺时针依次点矩形的四个角！" << endl;
-            cout << "现在点击了" << utsc.clickTimes << "次" << endl;
+            //cout << "需要从左上角开始，顺时针依次点矩形的四个角！" << endl;
+            //cout << "现在点击了" << utsc.clickTimes << "次" << endl;
         }
         key = waitKey(1);
         if (key == 'q')

@@ -26,6 +26,7 @@ public:
     void ViewDst(int num);
     void SaveVideo(int index,cv::Mat dst);
     void Writer(int index,String videoname);
+    void saveall(string filepath, int num);
     ~MainWindow();
 
 private slots:

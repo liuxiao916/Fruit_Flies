@@ -348,7 +348,7 @@
       <x>50</x>
       <y>720</y>
       <width>1251</width>
-      <height>21</height>
+      <height>27</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_10">
@@ -405,6 +405,19 @@
     </property>
     <property name="text">
      <string>开始运行</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_videoname">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>770</y>
+      <width>271</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Waiting for Input</string>
     </property>
    </widget>
   </widget>
