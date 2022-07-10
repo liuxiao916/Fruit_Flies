@@ -7,7 +7,7 @@ using namespace std;
 int main() {
     board bo[4];
     VideoWriter writer("output.avi",  CV_FOURCC('M','J','P','G'), 30.0, cv::Size(155*6, 270));
-    VideoCapture video("/media/jf/My Passport/SMD_Naive_NachBac_0521.mp4");
+    VideoCapture video("/media/jf/My Passport/gy/mp4/aaa.mp4");
     float fps = (float)video.get(CV_CAP_PROP_FPS);
     double all_length = video.get(CV_CAP_PROP_FRAME_COUNT);
     int index,i,board_num;
@@ -45,6 +45,7 @@ int main() {
     for (index = 0;index<board_num;index++){
         bo[index].get_point(src);  //用鼠标点四个柱子
         bo[index].reset_matcher();  //初始化模板匹配
+        bo[index].reset_threshold();
         bo[index].adjust_lines();  //调整网格
     }
 //    cvNamedWindow("output3", 0);

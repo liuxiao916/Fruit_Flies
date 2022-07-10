@@ -28,6 +28,7 @@ public:
     void get_point(Mat &img);
     void adjust_lines();
     void reset_matcher();
+    void reset_threshold();
     void state(Mat &img, int time);
     void csv_output(int pos);
     void set_speed(int speed);
@@ -35,6 +36,8 @@ public:
     Mat dst,M;
 private:
     callbackP utsc;
+    callbackP utsc1;
+    int set_threshold;
     int length = 155*6;
     int height = 45*6;
     char key;

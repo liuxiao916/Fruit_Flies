@@ -16,6 +16,7 @@ public:
     int stop_time1,stop_time2;
     int average1_x,average1_y,average2_x,average2_y,num;
     int court_start,mate_start,mate_end;
+    int threshold_num;
     int first_court;
     bool first_court1;
     int may_mate;

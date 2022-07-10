@@ -2,6 +2,7 @@
 int s1=15,s2=15;
 int diffx = 0;
 int diffy = 0;
+int ss_threshold;
 int x[15],y[4];
 Mat image;
 board::board() {
@@ -32,11 +33,44 @@ void trackBar(int, void*)
         y[i] +=diffy;
     Mat img2;
     img2 = image.clone();
+
+
+    Mat img_gray,img_black;
+//    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3), Point(-1, -1));
+    vector<vector<cv::Point>> contours;
+    vector<cv::Vec4i> hierarchy;
+
+    img2 = image.clone();
+    cvtColor(image,img_gray,CV_BGR2GRAY);
+    medianBlur(img_gray,img_gray,3);
+    threshold(img_gray,img_black,ss_threshold,255,CV_THRESH_BINARY);
+//    dilate(img_black, img_black, kernel);
+    findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+    vector<RotatedRect> boundRect(contours.size());
+    vector<double> contArea(contours.size());
+
+    for (size_t i = 0; i < contours.size(); i++)
+    {
+        //approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
+        boundRect[i] = minAreaRect(Mat(contours[i]));
+        contArea[i] = contourArea(contours[i]);
+    }
+    for (size_t i = 0; i < contours.size(); i++)
+    {
+        int t_area = boundRect[i].size.area();
+        if (t_area>=14 &&  contArea[i]>12 && contArea[i]<8000) {
+            Scalar color = Scalar(0, 255, 255);
+            drawContours(img2, contours, i, color, 1);
+        }
+    }
+
     for (int i=0;i<4;i++)
         line(img2,Point(0, y[i]),Point(155*6, y[i]),Scalar(0,0,255),1);
     for (int i=0;i<15;i++)
         line(img2,Point(x[i], 0),Point(x[i], 270),Scalar(0,0,255),1);
+//    cout<<"threshold =" <<ss_threshold<<endl;
     imshow("output2", img2);
+//    imshow("black", img_black);
 }
 void first(){
     diffx = s1 - 15;
@@ -57,8 +91,37 @@ void first(){
         x[i] +=diffx;
     for (int i=0;i<4;i++)
         y[i] +=diffy;
-    Mat img2;
+
+    Mat img_gray,img_black,img2;
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3), Point(-1, -1));
+    vector<vector<cv::Point>> contours;
+    vector<cv::Vec4i> hierarchy;
+
     img2 = image.clone();
+    cvtColor(image,img_gray,CV_BGR2GRAY);
+    medianBlur(img_gray,img_gray,3);
+    threshold(img_gray,img_black,ss_threshold,255,CV_THRESH_BINARY);
+//    dilate(img_black, img_black, kernel);
+    findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+    vector<RotatedRect> boundRect(contours.size());
+    vector<double> contArea(contours.size());
+
+    for (size_t i = 0; i < contours.size(); i++)
+    {
+        //approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
+        boundRect[i] = minAreaRect(Mat(contours[i]));
+        contArea[i] = contourArea(contours[i]);
+    }
+    for (size_t i = 0; i < contours.size(); i++)
+    {
+        int t_area = boundRect[i].size.area();
+        if (t_area>=14 &&  contArea[i]>12 && contArea[i]<8000) {
+            Scalar color = Scalar(0, 255, 255);
+            drawContours(img2, contours, i, color, 1);
+        }
+    }
+
+
     for (int i=0;i<4;i++)
         line(img2,Point(0, y[i]),Point(155*6, y[i]),Scalar(0,0,255),1);
     for (int i=0;i<15;i++)
@@ -83,6 +146,26 @@ void onMouse(int event, int x, int y, int flags, void *utsc)
         }
     }
 }
+
+void onMouse_threshold(int event, int x, int y, int flags, void *utsc)
+{
+    callbackP cp = *(callbackP*)utsc;  // 先转换类型，再取数据
+
+    if (event == EVENT_LBUTTONUP)      //响应鼠标左键事件
+    {
+        circle((*(callbackP*)utsc).src, Point(x, y), 1, Scalar(0, 0, 255), 2);  //标记选中点
+//        imshow("wait ", (*(callbackP*)utsc).src);
+        (*(callbackP*)utsc).srcTri.emplace_back(Point2f(x, y));
+        cout << "x:" << x << " " << "y:" << y << endl;
+        (*(callbackP*)utsc).clickTimes++;
+
+        if ((*(callbackP*)utsc).clickTimes == 3)
+        {
+            cout << "按任意键继续！" << endl;
+        }
+    }
+}
+
 void board::set_speed(int speed) {
     for (int i=0;i<37;i++)
         flies[i].speed = speed;
@@ -119,10 +202,12 @@ void board::adjust_lines() {
     cvNamedWindow("output2", 0);
     resizeWindow("output2", 1280, 1080);
     bool process2 = true;
+    ss_threshold = set_threshold+28;
     first();
     while (process2){
         createTrackbar("diffx", "output2", &s1, 30, trackBar);
         createTrackbar("diffy", "output2", &s2, 30, trackBar);
+        createTrackbar("threshold", "output2", &ss_threshold, 200, trackBar);
         key = waitKey(1);
         if (key == 'q')
             break;
@@ -139,6 +224,42 @@ void board::reset_matcher() {
             matchcenter.emplace_back(center);
         }
     }
+}
+void board::reset_threshold(){
+    cvNamedWindow("threshold", 0);
+    resizeWindow("threshold", 1280, 1080);
+    Mat temp_src= image.clone();
+    Mat temp_gray;
+    imshow("threshold", temp_src);
+    cvtColor(temp_src,temp_gray,CV_BGR2GRAY);
+    bool process1 = true;
+    int nums,maxnum;
+    Point fly_center;
+    utsc1.src = image.clone();
+    while(process1) {
+        imshow("threshold", utsc1.src);
+        setMouseCallback("threshold", onMouse_threshold, (void *) &utsc1);  //类型转换
+        if (utsc1.clickTimes == 3) {
+            break;
+        } else {
+            cout << "click flys" << endl;
+            cout << "现在点击了" << utsc1.clickTimes << "次" << endl;
+        }
+        key = waitKey(1);
+        if (key == 'q')
+            break;
+    }
+    maxnum = 0;
+    for (int i=0;i<3;i++){
+        fly_center = utsc1.srcTri[i];
+        nums = temp_gray.ptr<uchar>(fly_center.y)[fly_center.x];
+        printf("num = %d \n",nums);
+        if (nums>maxnum)
+            maxnum = nums;
+    }
+    cout<<"min num ="<< maxnum<<endl;
+    set_threshold = maxnum;
+    destroyWindow("threshold");
 }
 float calc(Point2f rect[4]){
     float length,width;
@@ -214,11 +335,11 @@ void board::state(Mat &img, int time) {
     }
     cvtColor(dst,img_gray,CV_BGR2GRAY);
     medianBlur(img_gray,img_gray,3);
-    threshold(img_gray,img_black,152,255,CV_THRESH_BINARY);
-    dilate(img_black, img_black, kernel);
+    threshold(img_gray,img_black,ss_threshold,255,CV_THRESH_BINARY);
+//    dilate(img_black, img_black, kernel);
     findContours(img_black, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
-    imshow ("test2", img_black);
-    imwrite ("black.jpg",img_black);
+//    imshow ("test2", img_black);
+//    imwrite ("black.jpg",img_black);
     waitKey(1);
     vector<RotatedRect> boundRect(contours.size());
     vector<double> contArea(contours.size());
@@ -296,16 +417,16 @@ void board::state(Mat &img, int time) {
             string text1 = to_string(i);
 //            if (flies[i].fly_state == 0)
 //                text = "0";
-            if (flies[i].fly_state == 1)
-                if (flies[i].is_court || flies[i].buff_time1/fps>3)
-                    text = "Court";
-                else
-                    text = "MCourt";
-            if (flies[i].fly_state == 2)
-                text = "MMate";
-            if (flies[i].fly_state == 3)
-                text = "Mate";
-            putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 120, 255), 2);
+//            if (flies[i].fly_state == 1)
+//                if (flies[i].is_court || flies[i].buff_time1/fps>3)
+//                    text = "Court";
+//                else
+//                    text = "MCourt";
+//            if (flies[i].fly_state == 2)
+//                text = "MMate";
+//            if (flies[i].fly_state == 3)
+//                text = "Mate";
+//            putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 120, 255), 2);
 //            if (i==32){
 //                text=to_string(scale[i]);
 //                putText(dst, text, flies[i].fly2.back(), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar(0, 255, 0), 2);
