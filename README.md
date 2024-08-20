@@ -43,9 +43,6 @@
 
 通过判断雌雄果蝇的运动状态与位置判定果蝇当前的行为，实现状态的切换以及计时。
 
-Fan Jiang: [jf21010085@ustc.mail.edu.cn](mailto:jf21010085@ustc.mail.edu.cn)
-
-Xiao Liu: [hitlx916@stu.hit.edu.cn](mailto:hitlx916@stu.hit.edu.cn)
 
 **Processing of Image and segmentation of fruit flies**
 
