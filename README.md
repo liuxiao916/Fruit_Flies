@@ -1,11 +1,5 @@
 # Fruit_Flies
 
-作者
-
-江帆: [jf21010085@ustc.mail.edu.cn](mailto:jf21010085@ustc.mail.edu.cn)
-
-刘笑: [hitlx916@stu.hit.edu.cn](mailto:hitlx916@stu.hit.edu.cn)
-
 1. 图像预处理与果蝇的分割
 
 首先通过鼠标点击确定板子的固定桩所在位置，通过透视变换将视角进行标准化处理，从而按照图1的方式利用网格对每一对果蝇进行分割
